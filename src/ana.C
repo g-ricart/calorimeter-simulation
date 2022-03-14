@@ -15,7 +15,7 @@ void ana(TString file_path)
     inTree->SetBranchAddress("eTrue",       &eTrue);
 
     // Create histogram
-    TH1F* resolution = new TH1F("hist_reso", "Resolution distribution", 40, -1, 1);
+    TH1F* resolution = new TH1F("hist_reso", "Resolution distribution", 100, -1, 1);
 
     // Loop over tree entries.
     for (Int_t entryId = 0; entryId < inTree->GetEntries(); ++entryId) {

@@ -41,10 +41,10 @@ void ana_simu(const Event& event);
 int main(int argc, char **argv)
 {
     // By default create 400 events.
-    int nEventsMax = 400;
+    int nEventsMax = 50000;
     // If command line argument provided, take it as max number of events.
     if (argc > 1) nEventsMax = atoi(argv[1]);
-    
+
     // Create a new ROOT binary machine independent file.
     // Note that this file may contain any kind of ROOT objects, histograms,
     // pictures, graphics objects, detector geometries, tracks, events, etc..
