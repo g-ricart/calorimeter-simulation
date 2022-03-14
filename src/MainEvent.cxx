@@ -62,9 +62,11 @@ int main(int argc, char **argv)
     int eventNumber;
     float eTrue;
     float eReco;
+    float eRecoBias;
     outTree.Branch("eventNumber", &eventNumber);
     outTree.Branch("eTrue", &eTrue);
     outTree.Branch("eReco", &eReco);
+    outTree.Branch("eRecoBias", &eRecoBias);
 
     // Create a dummy event that will be build in the loop.
     Event event;
@@ -87,8 +89,9 @@ int main(int argc, char **argv)
         reconstruct(event);
 
         // Prepare to fill the output tree.
-        eTrue = event.eTrue();
-        eReco = event.eReco();
+        eTrue     = event.eTrue();
+        eReco     = event.eReco();
+        eRecoBias = event.eRecoBias();
         outTree.Fill(); // Fill the tree.
     } // End event loop
 

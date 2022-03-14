@@ -19,6 +19,7 @@ void Event::build(int eventNumber)
     m_eventNumber = eventNumber;
 
     // initialize data member to invalid values
-    m_eTrue = -999.;
-    m_eReco = -999.;
+    m_eTrue     = -999.;
+    m_eReco     = -999.;
+    m_eRecoBias = -999.;
 }
