@@ -14,8 +14,14 @@ void ana(TString file_path)
     inTree->SetBranchAddress("eReco",       &eReco);
     inTree->SetBranchAddress("eTrue",       &eTrue);
 
-    // Create histogram
+    // Create histograms
     TH1F* resolution = new TH1F("hist_reso", "Resolution distribution", 100, -1, 1);
+    resolution->GetXaxis()->SetTitle("eReco - eTrue [GeV]");
+    resolution->SetStats(0);
+
+    // Fit functions
+    TF1* fit_gaus = new TF1("fit_gaus", "gaus", -999, 999);
+    fit_gaus->SetLineColor(kRed);
 
     // Loop over tree entries.
     for (Int_t entryId = 0; entryId < inTree->GetEntries(); ++entryId) {
@@ -24,6 +30,16 @@ void ana(TString file_path)
         // Fill histograms
         resolution->Fill(eReco - eTrue);
     }
+
+    // Fit histograms
+    resolution->Fit(fit_gaus, "E");
+
+    // Get fit parameters
+    auto chi2      = fit_gauss.GetChisquare()
+    auto ndof      = fit_gauss.GetNDF()
+    auto mean      = fit_gauss.GetParameter(1)
+    auto sigma     = fit_gauss.GetParameter(2)
+    auto sigma_err = fit_gauss.GetParError(2)
 
     // Outputs
     cout <<  inFile << endl; // check the pointer to the root file
@@ -34,5 +50,6 @@ void ana(TString file_path)
     // Draw histograms
     TCanvas* c1 = new TCanvas("c1", "", 0, 0, 1000, 800);
     resolution->Draw();
+    fit_gaus->Draw("same");
     c1->Update();
 }
