@@ -6,11 +6,19 @@
  * Helpers to describe the geometry of the detector.
  */
 
+ #include "CaloConstants.h"
+
 class CellAddress; // Forward declaration, similar to #include.
 
 class CaloGeometry
 {
 public:
+
+    // Constructor
+    CaloGeometry();
+
+    // Destructor
+    ~CaloGeometry();
 
 	// Return false if the (x,y,z) point is not located in the calorimeter
 	// volume otherwise return true and fill the CellAddress variables with the
