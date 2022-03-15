@@ -103,7 +103,7 @@ int main(int argc, char **argv)
 
     outFile.Close();
 
-    // Check CellAdress implementation
+    // Check CellAddress implementation
     CellAddress cell = CellAddress(40, 4, 0);
     cout << "(" << cell.ix() << ", " << cell.iy() << ", " << cell.layer() << ")" << endl;
     cout << cell.IsValid() << endl;
