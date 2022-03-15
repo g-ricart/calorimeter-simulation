@@ -28,7 +28,7 @@ public:
     // Setters
     void setix(int ix) { m_ix = ix; }
     void setiy(int iy) { m_iy = iy; }
-    void setilayer(int ilayer) { m_ilayer = ilayer; }
+    void setlayer(int layer) { m_layer = layer; }
 
 	// Accessors.
 	int ix() const;

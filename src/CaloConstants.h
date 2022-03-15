@@ -13,7 +13,7 @@ namespace CalConst {
 	static const float XYMin = -2.;
 	static const float XYMax = 2.;
 
-	static const int NbCellsInXY = 40; // Must be even
+	static const int NbCellsInXY = 40;
 	static const int NbLayers = 1;
 
 	// Cell size in x-y.
