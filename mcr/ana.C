@@ -6,7 +6,7 @@ void ana(TString file_path)
     TFile* inFile = TFile::Open(file_path);
     TTree* inTree = (TTree*)inFile->Get("eventTree");
 
-    // Set branch adresses.
+    // Set branch addresses.
     Int_t eventNumber;
     Float_t eReco;
     Float_t eTrue;
