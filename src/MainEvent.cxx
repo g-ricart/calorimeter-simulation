@@ -32,6 +32,7 @@
 #include "Event.h"
 #include "CellAddress.h"
 #include "CaloCell.h"
+#include "CaloGeometry.h"
 
 using namespace std;
 
@@ -112,6 +113,14 @@ int main(int argc, char **argv)
     CaloCell cell_e = CaloCell(cell, 0.3);
     cout << "energy = " << cell_e.energy() << endl;
     cout << "address = " << cell_e.address() << endl;
+
+    // Check CaloGeometry implementation
+    double xyz[3] = {0., 0., 0.};
+    CaloGeometry caloGeo = CaloGeometry();
+    cout << caloGeo.IsInside(xyz, cell) << endl;
+    cout << "Center of cell : (" << caloGeo.xCentre(cell) << ", "
+                                 << caloGeo.yCentre(cell) << ", "
+                                 << caloGeo.zCentre(cell) << ")" << endl;
 
 
     return 0;

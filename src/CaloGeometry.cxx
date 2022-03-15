@@ -11,30 +11,35 @@ CaloGeometry::~CaloGeometry()
 }
 
 //______________________________________________________________________________
-static bool IsInside(double xyz[3], CellAddress& cellAddress)
+bool CaloGeometry::IsInside(double xyz[3], CellAddress& cellAddress)
 {
     // Cell position corresponding to xyz
-    int ix     = floor((x[0] - CalConst::XYMin)/CalConst::XYSize);
-    int iy     = floor((x[1] - CalConst::XYMin)/CalConst::XYSize);
-    int ilayer = floor((x[3] - CalConst::ZMin)/CalConst::ZSize);
+    int ix     = int((xyz[0] - CalConst::XYMin)/CalConst::XYSize);
+    int iy     = int((xyz[1] - CalConst::XYMin)/CalConst::XYSize);
+    int layer  = int((xyz[2] - CalConst::ZMin)/CalConst::ZSize);
 
-    if (cellAddress->IsValid()) {
-        cellAddress->setix(ix);
-        cellAddress->setiy(iy);
-        cellAddress->ilayer(ilayer);
+    // Set cell coordinates
+    cellAddress.setix(ix);
+    cellAddress.setiy(iy);
+    cellAddress.setlayer(layer);
 
-        return true;
-    }
-
-    return false;
-
+    return (cellAddress.IsValid());
 }
 
 //______________________________________________________________________________
-static double xCentre(const CellAddress& cellAddress)
+double CaloGeometry::xCentre(const CellAddress& cellAddress)
 {
-
+    return double(cellAddress.ix() + 0.5)*CalConst::XYSize + CalConst::XYMin;
 }
 
 //______________________________________________________________________________
-static double yCentre(const CellAddress& cellAddress)
+double CaloGeometry::yCentre(const CellAddress& cellAddress)
+{
+    return double(cellAddress.iy() + 0.5)*CalConst::XYSize + CalConst::XYMin;
+}
+
+//______________________________________________________________________________
+double CaloGeometry::zCentre(const CellAddress& cellAddress)
+{
+    return double(cellAddress.layer() + 0.5)*CalConst::ZSize + CalConst::ZMin;
+}
