@@ -30,6 +30,7 @@
 #include "TStopwatch.h"
 
 #include "Event.h"
+#include "CellAddress.h"
 
 using namespace std;
 
@@ -100,5 +101,11 @@ int main(int argc, char **argv)
     outTree.Print();
 
     outFile.Close();
+
+    // Check CellAdress implementation
+    CellAddress cell = CellAddress(40, 4, 0);
+    cout << "(" << cell.ix() << ", " << cell.iy() << ", " << cell.layer() << ")" << endl;
+    cout << cell.IsValid() << endl;
+
     return 0;
 }

@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include "CaloConstants.h"
 
 class CellAddress
 {
@@ -15,13 +16,16 @@ public:
 	// Default constructor, gives you an invalid address.
 	CellAddress();
 
-	// Full constructor. TODO: to be implemented.
+	// Full constructor.
 	CellAddress(int ix, int iy, int layer);
 
-	// Is the address valid. TODO: to be implemented.
+    // Destructor
+    ~CellAddress();
+
+	// Is the address valid.
 	bool IsValid() const;
 
-	// Accessors. TODO: to be implemented.
+	// Accessors.
 	int ix() const;
 	int iy() const;
 	int layer() const;
