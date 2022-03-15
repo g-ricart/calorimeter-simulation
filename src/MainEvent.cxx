@@ -33,6 +33,7 @@
 #include "CellAddress.h"
 #include "CaloCell.h"
 #include "CaloGeometry.h"
+#include "CaloSimulation.h"
 
 using namespace std;
 
@@ -121,6 +122,12 @@ int main(int argc, char **argv)
     cout << "Center of cell : (" << caloGeo.xCentre(cell) << ", "
                                  << caloGeo.yCentre(cell) << ", "
                                  << caloGeo.zCentre(cell) << ")" << endl;
+
+    // Check CaloSimulation::CalorimeterData implementation
+    CaloSimulation caloSim = CaloSimulation();
+    CaloSimulation::CalData caldata;
+    caloSim.CalorimeterData(caldata);
+    cout << caloSim << endl;
 
 
     return 0;
