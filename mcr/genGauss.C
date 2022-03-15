@@ -13,6 +13,8 @@ void genGauss()
     // uniformly  between  0. and MAX
 
     Float_t x, y;
+    TCanvas* c1 = new TCanvas("c1", "", 0, 0, 1000, 800);
+
     for (Int_t i=0; i<10000; i++) {
         x = gRandom->Uniform(4.) - 2.;
         y = gRandom->Uniform(gaus->Eval(0));
@@ -21,5 +23,15 @@ void genGauss()
             h->Fill(x);
         }
     h->Draw();
+
     }
+
+    // Fit functions
+    TF1* fit_gaus = new TF1("fit_gaus", "gaus", -999, 999);
+    fit_gaus->SetLineColor(kRed);
+
+    // Fit histograms
+    h->Fit(fit_gaus, "E");
+    fit_gaus->Draw("same");
+    c1->Update();
 }
