@@ -49,8 +49,6 @@ void CaloSimulation::SimulateShower(float xImpact, float yImpact, float energy)
     dETrans->SetParameter("yImpact", yImpact);
     dETrans->SetParameter("xSigma", ShowConst::molRad);
     dETrans->SetParameter("ySigma", ShowConst::molRad);
-    dETrans->SetNpx(1000);
-    dETrans->SetNpy(1000);
 
     for (size_t layer = 0; layer < CalConst::NbLayers; layer++) {
         float z0 = layer*CalConst::ZSize - CalConst::ZMin;
