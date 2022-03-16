@@ -6,7 +6,7 @@
 #include "TH2F.h"
 #include "TCanvas.h"
 
-void ana_simu(const Event& event)
+void ana_simu(Event& event)
 {
     // Get calorimeter data from event.
     CaloSimulation::CalData calData = event.calData();
@@ -23,13 +23,11 @@ void ana_simu(const Event& event)
                                                       // cell to the layer
     }
 
-    TH1F* histoZ = new TH1F("histoZ", "Longitudinal energy loss",
-                            CalConst::NbLayers, 0, CalConst::NbLayers + 1);
+    TH1F* histZ = new TH1F("histZ", "Longitudinal energy loss",
+                           CalConst::NbLayers, 0, CalConst::NbLayers);
     for (size_t i = 0; i < sizeof(layerEnergies)/sizeof(layerEnergies[0]); i++){
-        histoZ->SetBinContent(i+1, layerEnergies[i]);
+        histZ->SetBinContent(i+1, layerEnergies[i]);
     }
 
-    TCanvas* c1 = new TCanvas("c1", "", 0, 0, 1000, 800);
-    histoZ->Draw();
-    c1->Update();
+    event.setHistZ(histZ);
 }
