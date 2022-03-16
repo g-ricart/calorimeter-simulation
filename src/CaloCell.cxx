@@ -29,3 +29,9 @@ CellAddress CaloCell::address() const
 {
     return m_address;
 }
+
+//______________________________________________________________________________
+void CaloCell::setEnergy(float energy)
+{
+    m_energy = energy;
+}
