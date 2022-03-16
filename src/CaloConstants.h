@@ -14,7 +14,7 @@ namespace CalConst {
 	static const float XYMax = 2.;
 
 	static const int NbCellsInXY = 40;
-	static const int NbLayers    = 1;
+	static const int NbLayers    = 10;
 
 	// Cell size in x-y.
 	static const float XYSize = (XYMax - XYMin) / NbCellsInXY;
