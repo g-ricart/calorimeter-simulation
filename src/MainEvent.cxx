@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     // Note that this file may contain any kind of ROOT objects, histograms,
     // pictures, graphics objects, detector geometries, tracks, events, etc..
     // This file is now becoming the current directory.
-    TFile outFile("Event.root", "RECREATE");
+    TFile* outFile = new TFile("Event.root", "RECREATE");
 
     // Create a ROOT Tree and the branches to be written.
     // The instruction "Branch" tells ROOT that the value stored in this variable
@@ -66,17 +66,17 @@ int main(int argc, char **argv)
     // address of the variable to be written.
     // !!! You should add similar groups of lines if you want to store other
     // variables in the output tree.
-    TTree outTree("eventTree", "Calo sim root tree");
+    TTree* outTree = new TTree("eventTree", "Calo sim root tree");
     int eventNumber;
     float eTrue;
     float eReco;
     float eRecoBias;
     TH1F* histZ;
-    outTree.Branch("eventNumber",   &eventNumber);
-    outTree.Branch("eTrue",         &eTrue);
-    outTree.Branch("eReco",         &eReco);
-    outTree.Branch("eRecoBias",     &eRecoBias);
-    outTree.Branch("histZ", "TH1F", &histZ);
+    outTree->Branch("eventNumber",   &eventNumber);
+    outTree->Branch("eTrue",         &eTrue);
+    outTree->Branch("eReco",         &eReco);
+    outTree->Branch("eRecoBias",     &eRecoBias);
+    outTree->Branch("histZ", "TH1F", &histZ);
 
     // Create a dummy event that will be build in the loop.
     Event event;
@@ -103,14 +103,14 @@ int main(int argc, char **argv)
         eReco     = event.eReco();
         eRecoBias = event.eRecoBias();
         histZ     = event.histZ();
-        outTree.Fill(); // Fill the tree.
+        outTree->Fill(); // Fill the tree.
     } // End event loop
 
-    outFile.cd(); // Make sure we are in the outupt file.
-    outFile.Write(); // Write all current in the current directory.
-    outTree.Print();
+    outFile->cd(); // Make sure we are in the outupt file.
+    outFile->Write(); // Write all current in the current directory.
+    outTree->Print();
 
-    outFile.Close();
+    outFile->Close();
 
     // Check CellAddress implementation
     CellAddress cell = CellAddress(40, 4, 0);
