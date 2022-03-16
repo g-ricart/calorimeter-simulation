@@ -68,7 +68,7 @@ public:
         return os;
     }
 
-private: // TODO: to be completed.
+private:
     CalData m_caldata;
 
 };
