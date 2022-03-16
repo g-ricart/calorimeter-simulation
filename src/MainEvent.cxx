@@ -125,8 +125,7 @@ int main(int argc, char **argv)
 
     // Check CaloSimulation::CalorimeterData implementation
     CaloSimulation caloSim = CaloSimulation();
-    CaloSimulation::CalData caldata;
-    caloSim.CalorimeterData(caldata);
+    caloSim.CalorimeterData();
     cout << caloSim << endl;
 
 
