@@ -34,8 +34,9 @@ void CaloSimulation::SimulateShower(float xImpact, float yImpact, float energy)
     dEdz->SetParName(0, "E0");
     dEdz->SetParameter("E0", energy);
 
+    FunctionObjectdETrans fdETrans;
     TF2* dETrans = new TF2("dETrans",
-                           "TMath::Gaus(x, [0], [1])*TMath::Gaus(y, [2], [3])",
+                           fdETrans,
                            CalConst::XYMin,
                            CalConst::XYMax,
                            CalConst::XYMin,
@@ -47,7 +48,9 @@ void CaloSimulation::SimulateShower(float xImpact, float yImpact, float energy)
     dETrans->SetParameter("xImpact", xImpact);
     dETrans->SetParameter("yImpact", yImpact);
     dETrans->SetParameter("xSigma", ShowConst::molRad);
-    dETrans->SetParameter("ysigma", ShowConst::molRad);
+    dETrans->SetParameter("ySigma", ShowConst::molRad);
+    dETrans->SetNpx(1000);
+    dETrans->SetNpy(1000);
 
     for (size_t layer = 0; layer < CalConst::NbLayers; layer++) {
         float z0 = layer*CalConst::ZSize - CalConst::ZMin;
@@ -56,10 +59,10 @@ void CaloSimulation::SimulateShower(float xImpact, float yImpact, float energy)
 
         for (size_t iy = 0; iy < CalConst::NbCellsInXY; iy++) {
             for (size_t ix = 0; ix < CalConst::NbCellsInXY; ix++) {
-                float x0 = ix*CalConst::XYSize - CalConst::XYMin;
-                float x1 = (ix + 1)*CalConst::XYSize - CalConst::XYMin;
-                float y0 = iy*CalConst::XYSize - CalConst::XYMin;
-                float y1 = (iy + 1)*CalConst::XYSize - CalConst::XYMin;
+                float x0 = float(ix)*CalConst::XYSize     + CalConst::XYMin;
+                float x1 = float(ix + 1)*CalConst::XYSize + CalConst::XYMin;
+                float y0 = float(iy)*CalConst::XYSize     + CalConst::XYMin;
+                float y1 = float(iy + 1)*CalConst::XYSize + CalConst::XYMin;
 
                 float cellEnergyRatio = dETrans->Integral(x0, x1, y0, y1);
                 float cellEnergy = cellEnergyRatio*layerEnergy;
@@ -73,13 +76,27 @@ void CaloSimulation::SimulateShower(float xImpact, float yImpact, float energy)
 
 
 //______________________________________________________________________________
-Double_t CaloSimulation::FunctionObjectdEdz::operator()(Double_t *x, Double_t *p)
+Double_t CaloSimulation::FunctionObjectdEdz::operator()(Double_t *x,
+                                                        Double_t *par)
 {
     Double_t z = x[0];
-    Double_t dEdz = (p[0]/ShowConst::x0) * ShowConst::b;
+    Double_t dEdz = (par[0]/ShowConst::x0) * ShowConst::b;
     dEdz *= TMath::Power((ShowConst::b * z)/ShowConst::x0, ShowConst::a - 1.);
     dEdz *= TMath::Exp(-(ShowConst::b * z)/ShowConst::x0);
     dEdz /= TMath::Gamma(ShowConst::a);
 
     return dEdz;
+}
+
+//______________________________________________________________________________
+Double_t CaloSimulation::FunctionObjectdETrans::operator()(Double_t *xy,
+                                                           Double_t *par)
+{
+    Double_t x = xy[0];
+    Double_t y = xy[1];
+
+    Double_t dEdx = TMath::Gaus(x, par[0], par[1], true);
+    Double_t dEdy = TMath::Gaus(y, par[2], par[3], true);
+
+    return dEdx*dEdy;
 }
