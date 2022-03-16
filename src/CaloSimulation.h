@@ -49,7 +49,7 @@ public:
     };
 
     // Getters
-    CalData GetCalData() { return m_caldata }
+    CalData GetCalData() { return m_caldata; }
 
 	// Print all the cells.
 	friend std::ostream& operator<<(std::ostream& os, const CaloSimulation& cs)
