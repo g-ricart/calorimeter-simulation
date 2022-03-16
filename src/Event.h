@@ -35,8 +35,8 @@ public:
     void seteRecoBias(float eRecoBias) { m_eRecoBias = eRecoBias; }
     void setImpactPoint(float xy[2]);
     void setCalData(CaloSimulation::CalData caldata) { m_caldata = caldata; }
-    void setHistZ(TH1F histZ) { m_histZ = histZ; }
-    void setHistXY(TH2F histXY) { m_histXY = histXY; }
+    void setHistZ(TH1F* histZ) { m_histZ = histZ; }
+    void setHistXY(TH2F* histXY) { m_histXY = histXY; }
 
     // getters
     int    eventNumber()              const { return m_eventNumber; }
