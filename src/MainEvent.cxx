@@ -28,6 +28,8 @@
 #include "TRandom3.h"
 #include "TTree.h"
 #include "TStopwatch.h"
+#include "TH1F.h"
+#include "TH2F.h"
 
 #include "Event.h"
 #include "CellAddress.h"
@@ -41,13 +43,13 @@ using namespace std;
 
 void reconstruct(Event& event);
 void simulate(Event& event);
-void ana_simu(const Event& event);
+void ana_simu(Event& event);
 
 //______________________________________________________________________________
 int main(int argc, char **argv)
 {
     // By default create 400 events.
-    int nEventsMax = 1;
+    int nEventsMax = 10;
     // If command line argument provided, take it as max number of events.
     if (argc > 1) nEventsMax = atoi(argv[1]);
 
@@ -69,10 +71,12 @@ int main(int argc, char **argv)
     float eTrue;
     float eReco;
     float eRecoBias;
-    outTree.Branch("eventNumber", &eventNumber);
-    outTree.Branch("eTrue", &eTrue);
-    outTree.Branch("eReco", &eReco);
-    outTree.Branch("eRecoBias", &eRecoBias);
+    TH1F* histZ;
+    outTree.Branch("eventNumber",   &eventNumber);
+    outTree.Branch("eTrue",         &eTrue);
+    outTree.Branch("eReco",         &eReco);
+    outTree.Branch("eRecoBias",     &eRecoBias);
+    outTree.Branch("histZ", "TH1F", &histZ);
 
     // Create a dummy event that will be build in the loop.
     Event event;
@@ -98,6 +102,7 @@ int main(int argc, char **argv)
         eTrue     = event.eTrue();
         eReco     = event.eReco();
         eRecoBias = event.eRecoBias();
+        histZ     = event.histZ();
         outTree.Fill(); // Fill the tree.
     } // End event loop
 
@@ -133,7 +138,6 @@ int main(int argc, char **argv)
     // Check CaloSimulation::SimulateShower implementation
     caloSim.SimulateShower(0, 0, 50);
     //cout << caloSim << endl;
-
 
     return 0;
 }
