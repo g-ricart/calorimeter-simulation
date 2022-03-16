@@ -31,7 +31,7 @@ public:
     //Destructor
     ~CaloSimulation();
 
-	// Add the calorimeter cells to the vector of cell caldata.
+	// Add the calorimeter cells to the map of cell caldata.
 	void CalorimeterData();
 
 	// Simulate a shower of a given energy, starting from the impact point (x,y)
@@ -45,7 +45,14 @@ public:
     class FunctionObjectdEdz
     {
     public:
-         Double_t operator()(Double_t *x, Double_t *p);
+        Double_t operator()(Double_t *x, Double_t *p);
+    };
+
+    // Transverse deposited energy function
+    class FunctionObjectdETrans
+    {
+    public:
+        Double_t operator()(Double_t *x, Double_t *p);
     };
 
     // Getters
