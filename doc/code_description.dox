@@ -28,7 +28,7 @@
 * Does it match the distribution used in `reconstruct.cxx`?
 * 2. In `reconstruct.cxx` replace the uniform distribution with a Gaussian (see the [ROOT documentation](https://root.cern.ch/doc/master/index.html) and look for TRandom).
 * 3. Fit the resolution with a Gaussian.
-* 4. Is the sigma of the Gaussian the expected value? 
+* 4. Is the sigma of the Gaussian the expected value?
 * 5. Introduce a new variable in `Event.h` (and `Event.cxx` ): `eRecoBias` fixed to be equal to `eReco`+0.1 GeV in `reconstruct.cxx`.
 * 6. Fit `eRecoBias-eTrue`
 * 7. Do you find the 0.1 GeV bias back?
