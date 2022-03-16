@@ -71,7 +71,7 @@ int main(int argc, char **argv)
     float eTrue;
     float eReco;
     float eRecoBias;
-    TH1F* histZ;
+    TH1F* histZ = new TH1F();
     outTree->Branch("eventNumber",   &eventNumber);
     outTree->Branch("eTrue",         &eTrue);
     outTree->Branch("eReco",         &eReco);
