@@ -71,12 +71,14 @@ int main(int argc, char **argv)
     float eTrue;
     float eReco;
     float eRecoBias;
-    TH1F* histZ = new TH1F();
-    outTree->Branch("eventNumber",   &eventNumber);
-    outTree->Branch("eTrue",         &eTrue);
-    outTree->Branch("eReco",         &eReco);
-    outTree->Branch("eRecoBias",     &eRecoBias);
-    outTree->Branch("histZ", "TH1F", &histZ);
+    TH1F* histZ  = new TH1F();
+    TH2F* histXY = new TH2F();
+    outTree->Branch("eventNumber",    &eventNumber);
+    outTree->Branch("eTrue",          &eTrue);
+    outTree->Branch("eReco",          &eReco);
+    outTree->Branch("eRecoBias",      &eRecoBias);
+    outTree->Branch("histZ",  "TH1F", &histZ);
+    outTree->Branch("histXY", "TH2F", &histXY);
 
     // Create a dummy event that will be build in the loop.
     Event event;
@@ -103,6 +105,7 @@ int main(int argc, char **argv)
         eReco     = event.eReco();
         eRecoBias = event.eRecoBias();
         histZ     = event.histZ();
+        histXY    = event.histXY();
         outTree->Fill(); // Fill the tree.
     } // End event loop
 
