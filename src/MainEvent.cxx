@@ -45,7 +45,7 @@ void ana_simu(const Event& event);
 int main(int argc, char **argv)
 {
     // By default create 400 events.
-    int nEventsMax = 50000;
+    int nEventsMax = 1;
     // If command line argument provided, take it as max number of events.
     if (argc > 1) nEventsMax = atoi(argv[1]);
 
@@ -126,6 +126,10 @@ int main(int argc, char **argv)
     // Check CaloSimulation::CalorimeterData implementation
     CaloSimulation caloSim = CaloSimulation();
     caloSim.CalorimeterData();
+    cout << caloSim << endl;
+
+    // Check CaloSimulation::SimulateShower implementation
+    caloSim.SimulateShower(0, 0, 50);
     cout << caloSim << endl;
 
 
