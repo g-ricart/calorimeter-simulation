@@ -9,6 +9,12 @@
 #include "CellAddress.h"
 #include "CaloCell.h"
 #include "CaloConstants.h"
+#include "ShowerConstants.h"
+
+#include "TF1.h"
+#include "TF2.h"
+#include "TMath.h"
+
 #include <vector>
 #include <map>
 
@@ -26,13 +32,24 @@ public:
     ~CaloSimulation();
 
 	// Add the calorimeter cells to the vector of cell caldata.
-	// TODO: to be implemented.
-	void CalorimeterData(CalData& caldata);
+	void CalorimeterData();
 
 	// Simulate a shower of a given energy, starting from the impact point (x,y)
 	// of the electron at the front end of the calorimeter.
-	// TODO: to be implemented.
+    // CAN DO: creat layer class including all cells of the same layer in a map
+    // iterate over each layer to get map + layer energy
+    // iterate over each cell of the map and compute cell energy
 	void SimulateShower(float x, float y, float energy);
+
+    // Longitudinal deposited energy function
+    class FunctionObjectdEdz
+    {
+    public:
+         Double_t operator()(Double_t *x, Double_t *p);
+    };
+
+    // Getters
+    CalData GetCalData() { return m_caldata }
 
 	// Print all the cells.
 	friend std::ostream& operator<<(std::ostream& os, const CaloSimulation& cs)
