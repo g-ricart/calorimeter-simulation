@@ -19,7 +19,15 @@ void Event::build(int eventNumber)
     m_eventNumber = eventNumber;
 
     // initialize data member to invalid values
-    m_eTrue     = -999.;
-    m_eReco     = -999.;
-    m_eRecoBias = -999.;
+    m_eTrue       = -999.;
+    m_eReco       = -999.;
+    m_eRecoBias   = -999.;
+}
+
+//______________________________________________________________________________
+void Event::setImpactPoint(float xy[2])
+{
+    for (size_t i = 0; i < sizeof(xy)/sizeof(xy[0]); i++) {
+        m_impactPoint[i] = xy[i];
+    }
 }
