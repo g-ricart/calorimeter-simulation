@@ -34,6 +34,8 @@
 #include "CaloCell.h"
 #include "CaloGeometry.h"
 #include "CaloSimulation.h"
+#include "CaloConstants.h"
+#include "ShowerConstants.h"
 
 using namespace std;
 
@@ -126,11 +128,11 @@ int main(int argc, char **argv)
     // Check CaloSimulation::CalorimeterData implementation
     CaloSimulation caloSim = CaloSimulation();
     caloSim.CalorimeterData();
-    cout << caloSim << endl;
+    //cout << caloSim << endl;
 
     // Check CaloSimulation::SimulateShower implementation
     caloSim.SimulateShower(0, 0, 50);
-    cout << caloSim << endl;
+    //cout << caloSim << endl;
 
 
     return 0;
