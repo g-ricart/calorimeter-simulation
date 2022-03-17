@@ -60,7 +60,7 @@ public:
     };
 
     // Getters
-    CalData GetCalData()  { return m_caldata; }
+    CalData GetCalData()  { return m_caldata;  }
     float   GeteTrueTot() { return m_eTrueTot; }
     float   GeteMeasTot() { return m_eMeasTot; }
 
