@@ -72,8 +72,8 @@ int main(int argc, char **argv)
     float eReco;
     float eRecoBias;
     float impactPoint[2];
-    // float xReco;
-    // float yReco;
+    float xReco;
+    float yReco;
     TH1F* histZ  = new TH1F();
     TH2F* histXY = new TH2F();
     outTree->Branch("eventNumber",    &eventNumber);
@@ -81,8 +81,8 @@ int main(int argc, char **argv)
     outTree->Branch("eReco",          &eReco);
     outTree->Branch("eRecoBias",      &eRecoBias);
     outTree->Branch("impactPoint",    &impactPoint);
-    // outTree->Branch("xReco",          &xReco);
-    // outTree->Branch("yReco",          &yReco);
+    outTree->Branch("xReco",          &xReco);
+    outTree->Branch("yReco",          &yReco);
     outTree->Branch("histZ",  "TH1F", &histZ);
     outTree->Branch("histXY", "TH2F", &histXY);
 
@@ -115,6 +115,8 @@ int main(int argc, char **argv)
         eReco       = event.eReco();
         eRecoBias   = event.eRecoBias();
         impactPoint = event.impactPoint();
+        xReco       = event.xReco();
+        yReco       = event.yReco();
         histZ       = event.histZ();
         histXY      = event.histXY();
         outTree->Fill(); // Fill the tree.
