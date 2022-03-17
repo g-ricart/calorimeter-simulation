@@ -2,6 +2,7 @@
 #include "TRandom3.h"
 
 #include "Event.h"
+#include "ShowerConstants.h"
 
 using namespace std;
 
@@ -16,10 +17,10 @@ void reconstruct(Event& event)
     TRandom3 *rand = new TRandom3(0);
     rand->SetSeed(0);
     Float_t e = event.eTrue(); // get true energy
-    Float_t eReso = 0.1 * sqrt(e); // compute resolution
+    Float_t eReso = 0.1 * sqrt(e/ShowConst::e0); // compute resolution
     Float_t eSmeared = e + rand->Gaus(0, eReso); // smear with a gaussian distribution
     Float_t eBias = eSmeared + 0.1; // introduce bias
     event.seteReco(eSmeared); // set the reconstructed energy
-    event.seteRecoBias(eBias); // set biased reconstructed energy 
+    event.seteRecoBias(eBias); // set biased reconstructed energy
     delete rand;
 }
