@@ -16,19 +16,28 @@ public:
     CaloCell();
 
     //! Full constructor.
+    /*!
+        \param ca object of type CellAddress
+        \param energy float : energy in the cell
+        \sa CellAddress()
+    */
     CaloCell(const CellAddress& ca, float energy);
 
-  //! Destructor
-  ~CaloCell();
+    //! Destructor.
+    ~CaloCell();
 
-    // Accessors.
+    //! Access energy of the cell
     float energy() const;
+    //! Acess address of the cell
     CellAddress address() const;
 
-  // Setters.
-  void setEnergy(float energy);
+    //! Set energy of the cell
+    void setEnergy(float energy);
 
-    // "Print" function.
+    //! "Print" function for CaloCell.
+    /*!
+        \sa CaloCell(const CellAddress& ca, float energy)
+    */
     friend std::ostream& operator<<(std::ostream& os, const CaloCell& y)
     {
         os << "[" << y.address() << ", " << y.energy() << "]";

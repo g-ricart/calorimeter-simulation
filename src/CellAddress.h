@@ -24,8 +24,8 @@ public:
     */
     CellAddress(int ix, int iy, int layer);
 
-  //! Destructor
-  ~CellAddress();
+    //! Destructor
+    ~CellAddress();
 
     //!  Function to know if the address of a cell is in the calorimeter
     /*!
@@ -33,12 +33,12 @@ public:
     */
     bool IsValid() const;
 
-  //! Set cell index on x axis
-  void setix(int ix) { m_ix = ix; }
+    //! Set cell index on x axis
+    void setix(int ix) { m_ix = ix; }
     //! Set cell index on y axis
-  void setiy(int iy) { m_iy = iy; }
+    void setiy(int iy) { m_iy = iy; }
     //! Set cell index on z axis
-  void setlayer(int layer) { m_layer = layer; }
+    void setlayer(int layer) { m_layer = layer; }
 
     //! Access cell index on x axis
     int ix() const;
