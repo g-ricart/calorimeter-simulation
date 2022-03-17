@@ -1,18 +1,19 @@
 #include <cmath>
+
 #include "TRandom3.h"
+#include "TF1.h"
 
 #include "Event.h"
 #include "ShowerConstants.h"
+#include "CaloSimulation.h"
 
 using namespace std;
 
 /**
- * @brief This function generates the reconstrcuted parameters.
- * @details The reconstructed energy `eReco` is obtained by smearing the true value `eTrue`.
- * A random generator is used to draw a random value with +/- 0.5 GeV areound the true value.
+ * @brief This function generates the reconstructed impact point.
  * @param[in] event Event object.
  */
-void reconstruct(Event& event)
+void reconstruct(Event& event, CaloSimulation& caloSim)
 {
-
+    CaloSimulation::CalData calData = caloSim.GetCalData();
 }

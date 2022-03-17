@@ -110,7 +110,7 @@ int main(int argc, char **argv)
         ana_simu(event);
 
         // reconstruction
-        reconstruct(event);
+        reconstruct(event, caloSim);
 
         // Prepare to fill the output tree.
         eTrue       = event.eTrue();
