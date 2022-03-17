@@ -25,11 +25,3 @@ void Event::build(int eventNumber)
     m_xReco       = -999.;
     m_yReco       = -999.;
 }
-
-//______________________________________________________________________________
-void Event::setImpactPoint(float xy[2])
-{
-    for (size_t i = 0; i < sizeof(xy)/sizeof(xy[0]); i++) {
-        m_impactPoint[i] = xy[i];
-    }
-}

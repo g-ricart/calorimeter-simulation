@@ -18,13 +18,12 @@ void simulate(Event& event, CaloSimulation& caloSim)
     float y = gRandom->Uniform(abs(CalConst::XYMin - CalConst::XYMax))
            + CalConst::XYMin;
 
-    float impactPoint[2] = {x, y};
-
     // Simulate the shower
     caloSim.SimulateShower(x, y, ShowConst::e0);
     CaloSimulation::CalData calData = caloSim.GetCalData();
 
     // Store variables in event
-    event.setImpactPoint(impactPoint);
+    event.setxTrue(x);
+    event.setyTrue(y);
     event.setCalData(calData);
 }

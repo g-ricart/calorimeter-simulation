@@ -16,7 +16,8 @@ private:
     float                   m_eTrue ;         ///< true energy.
     float                   m_eReco ;         ///< reconstructed energy.
     float                   m_eRecoBias ;     ///< bias reconstruction energy.
-    float                   m_impactPoint[2]; ///< impact point.
+    float                   m_xTrue;          ///< true x coordinate of impact point
+    float                   m_yTrue;          ///< true y coordinate of impact point
     float                   m_xReco;          ///< reconstructed x coordinate of impact point
     float                   m_yReco;          ///< reconstructed y coordinate of impact point
     CaloSimulation::CalData m_caldata;        ///< calorimeter data map.
@@ -35,9 +36,10 @@ public:
     void seteTrue(float eTrue) { m_eTrue = eTrue; }
     void seteReco(float eReco) { m_eReco = eReco; }
     void seteRecoBias(float eRecoBias) { m_eRecoBias = eRecoBias; }
-    void setImpactPoint(float xy[2]);
+    void setxTrue(float xTrue) { m_xTrue = xTrue; }
+    void setyTrue(float yTrue) { m_yTrue = yTrue; }
     void setxReco(float xReco) { m_xReco = xReco; }
-    void setyReco(float yreco) { m_yReco = yReco; }
+    void setyReco(float yReco) { m_yReco = yReco; }
     void setCalData(CaloSimulation::CalData caldata) { m_caldata = caldata; }
     void setHistZ(TH1F* histZ) { m_histZ = histZ; }
     void setHistXY(TH2F* histXY) { m_histXY = histXY; }
@@ -47,7 +49,8 @@ public:
     float  eTrue()                    const { return m_eTrue; }
     float  eReco()                    const { return m_eReco; }
     float  eRecoBias()                const { return m_eRecoBias; }
-    float* impactPoint()                    { return m_impactPoint; }
+    float  xTrue()                    const { return m_xTrue; }
+    float  yTrue()                    const { return m_yTrue; }
     float  xReco()                    const { return m_xReco; }
     float  yReco()                    const { return m_yReco; }
     CaloSimulation::CalData calData() const { return m_caldata; }

@@ -71,7 +71,8 @@ int main(int argc, char **argv)
     float eTrue;
     float eReco;
     float eRecoBias;
-    float impactPoint[2];
+    float xTrue;
+    float yTrue;
     float xReco;
     float yReco;
     TH1F* histZ  = new TH1F();
@@ -80,7 +81,8 @@ int main(int argc, char **argv)
     outTree->Branch("eTrue",          &eTrue);
     outTree->Branch("eReco",          &eReco);
     outTree->Branch("eRecoBias",      &eRecoBias);
-    outTree->Branch("impactPoint",    &impactPoint);
+    outTree->Branch("xTrue",          &xTrue);
+    outTree->Branch("yTrue",          &yTrue);
     outTree->Branch("xReco",          &xReco);
     outTree->Branch("yReco",          &yReco);
     outTree->Branch("histZ",  "TH1F", &histZ);
@@ -114,7 +116,8 @@ int main(int argc, char **argv)
         eTrue       = event.eTrue();
         eReco       = event.eReco();
         eRecoBias   = event.eRecoBias();
-        impactPoint = event.impactPoint();
+        xTrue       = event.xTrue();
+        yTrue       = event.yTrue();
         xReco       = event.xReco();
         yReco       = event.yReco();
         histZ       = event.histZ();
@@ -134,8 +137,9 @@ int main(int argc, char **argv)
     cout << cell.IsValid() << endl;
 
     // Check CaloCell implementation
-    CaloCell cell_e = CaloCell(cell, 0.3);
-    cout << "energy = " << cell_e.energy() << endl;
+    CaloCell cell_e = CaloCell(cell, 0.3, 0.2);
+    cout << "true energy = " << cell_e.energyTrue() << endl;
+    cout << "measured energy = " << cell_e.energyMeas() << endl;
     cout << "address = " << cell_e.address() << endl;
 
     // Check CaloGeometry implementation
