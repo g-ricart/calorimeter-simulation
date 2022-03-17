@@ -26,20 +26,20 @@ public:
     typedef std::map<CellAddress, CaloCell> CalData;
 
     // Constructor
-	CaloSimulation();
+    CaloSimulation();
 
     //Destructor
     ~CaloSimulation();
 
-	// Add the calorimeter cells to the map of cell caldata.
-	void CalorimeterData();
+    // Add the calorimeter cells to the map of cell caldata.
+    void CalorimeterData();
 
-	// Simulate a shower of a given energy, starting from the impact point (x,y)
-	// of the electron at the front end of the calorimeter.
+    // Simulate a shower of a given energy, starting from the impact point (x,y)
+    // of the electron at the front end of the calorimeter.
     // CAN DO: creat layer class including all cells of the same layer in a map
     // iterate over each layer to get map + layer energy
     // iterate over each cell of the map and compute cell energy
-	void SimulateShower(float x, float y, float energy);
+    void SimulateShower(float x, float y, float energy);
 
     // Set all cell energy to zero.
     void Reset();
@@ -61,8 +61,8 @@ public:
     // Getters
     CalData GetCalData() { return m_caldata; }
 
-	// Print all the cells.
-	friend std::ostream& operator<<(std::ostream& os, const CaloSimulation& cs)
+    // Print all the cells.
+    friend std::ostream& operator<<(std::ostream& os, const CaloSimulation& cs)
     {
         for (auto const& x: cs.m_caldata) {
             os << x.first << ": " << x.second;
