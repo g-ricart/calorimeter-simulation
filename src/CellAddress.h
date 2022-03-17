@@ -49,20 +49,20 @@ public:
 
 	//! This defines comparator "<" between two CellAddress. This is necessary for
 	//! some container types of the standard template library (std).
+
 	/*!
 		\param x : object of type const CellAddress
 		\return bool : compares elements of CellAddress. First ix, then iy
 										and then layer
 		\sa CellAddress(int ix, int iy, int layer)
-
-		/[Example]
-		//Example of usage
-		CellAddress cell1 = CellAddress(0, 5, 1);
-		CellAddress cell2 = CellAddress(0, 4, 2);
-		bool Test = cell2 < cell1;
-		//Test will have value "True"
-		/[Example]
 	*/
+
+	//!	 	Example of usage
+	//!		CellAddress cell1 = CellAddress(0, 5, 1);
+	//!		CellAddress cell2 = CellAddress(0, 4, 2);
+	//!		bool Test = cell2 < cell1;
+	//!		Test will have value "True"
+
 	bool operator<(const CellAddress& x) const
 	{
 		if (x.m_iy == this ->m_iy && x.m_ix == this->m_ix)
@@ -85,14 +85,13 @@ public:
 		\return bool : compares elements of CellAddress. First ix, then iy
 										and then layer
 		\sa CellAddress(int ix, int iy, int layer)
-		///[Example]
-		//Example of usage
-		CellAddress cell1 = CellAddress(0, 5, 2);
-		CellAddress cell2 = CellAddress(0, 5, 4);
-		bool Test = cell2 > cell1;
-		//Test will have value "True"
-		///[Example]
 	*/
+
+	//!	 	Example of usage
+	//!		CellAddress cell1 = CellAddress(0, 5, 1);
+	//!		CellAddress cell2 = CellAddress(0, 5, 4);
+	//!		bool Test = cell2 > cell1;
+	//!		Test will have value "True"
 
 	bool operator>(const CellAddress& x) const
 	{
