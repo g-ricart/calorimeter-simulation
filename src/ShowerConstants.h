@@ -17,6 +17,11 @@ namespace ShowConst {
     static const float a      = 4.;
     static const float b      = .5;
     static const float molRad = 5e-2;
+
+    static const float impactXMin = CalConst::XYMin;
+    static const float impactXMax = CalConst::XYMax;
+    static const float impactYMin = CalConst::XYMin;
+    static const float impactYMax = CalConst::XYMax;
 }
 
 #endif

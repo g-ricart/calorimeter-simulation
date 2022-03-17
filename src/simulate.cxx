@@ -13,10 +13,10 @@ void simulate(Event& event, CaloSimulation& caloSim)
     caloSim.Reset();
 
     // Draw random point on calorimeter surface.
-    float x = gRandom->Uniform(abs(CalConst::XYMin - CalConst::XYMax))
-           + CalConst::XYMin;
-    float y = gRandom->Uniform(abs(CalConst::XYMin - CalConst::XYMax))
-           + CalConst::XYMin;
+    float x = gRandom->Uniform(abs(ShowConst::impactXMin - ShowConst::impactXMax))
+           + ShowConst::impactXMin;
+    float y = gRandom->Uniform(abs(ShowConst::impactYMin - ShowConst::impactYMax))
+           + ShowConst::impactYMin;
 
     // Simulate the shower
     caloSim.SimulateShower(x, y, ShowConst::e0);
