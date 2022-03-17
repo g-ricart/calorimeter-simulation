@@ -54,9 +54,12 @@ public:
 		\return bool : compares elements of CellAddress. First ix, then iy
 										and then layer
 		\sa CellAddress(int ix, int iy, int layer)
-		example : CellAddress cell1 = CellAddress(0, 5, 1);
-		           CellAddress cell2 = CellAddress(0, 4, 2);
-							 cell2 < cell1 -> True
+		/// [Example]
+		//Example of usage
+		CellAddress cell1 = CellAddress(0, 5, 1);
+		CellAddress cell2 = CellAddress(0, 4, 2);
+		bool Test = cell2 < cell1;
+		//Test will have value "True"
 	*/
 	bool operator<(const CellAddress& x) const
 	{
