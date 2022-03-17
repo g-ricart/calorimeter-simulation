@@ -57,11 +57,6 @@ public:
 		\sa CellAddress(int ix, int iy, int layer)
 	*/
 
-	//!	 	Example of usage
-	//!		CellAddress cell1 = CellAddress(0, 5, 1);
-	//!		CellAddress cell2 = CellAddress(0, 4, 2);
-	//!		bool Test = cell2 < cell1;
-	//!		Test will have value "True"
 
 	bool operator<(const CellAddress& x) const
 	{
@@ -86,12 +81,6 @@ public:
 										and then layer
 		\sa CellAddress(int ix, int iy, int layer)
 	*/
-
-	//!	 	Example of usage
-	//!		CellAddress cell1 = CellAddress(0, 5, 1);
-	//!		CellAddress cell2 = CellAddress(0, 5, 4);
-	//!		bool Test = cell2 > cell1;
-	//!		Test will have value "True"
 
 	bool operator>(const CellAddress& x) const
 	{
