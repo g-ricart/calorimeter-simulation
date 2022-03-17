@@ -55,13 +55,13 @@ public:
 										and then layer
 		\sa CellAddress(int ix, int iy, int layer)
 
-		///[Example]
+		/[Example]
 		//Example of usage
 		CellAddress cell1 = CellAddress(0, 5, 1);
 		CellAddress cell2 = CellAddress(0, 4, 2);
 		bool Test = cell2 < cell1;
 		//Test will have value "True"
-		///[Example]
+		/[Example]
 	*/
 	bool operator<(const CellAddress& x) const
 	{
