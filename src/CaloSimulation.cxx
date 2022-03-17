@@ -75,8 +75,8 @@ void CaloSimulation::SimulateShower(float xImpact, float yImpact, float energy)
 //______________________________________________________________________________
 void CaloSimulation::Reset()
 {
-    for (auto const& it: m_caldata) {
-        m_caldata[cellAddress].setEnergy(0);
+    for (auto& it: m_caldata) {
+        it.second.setEnergy(0);
     }
 }
 
