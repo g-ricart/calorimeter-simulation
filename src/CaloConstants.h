@@ -6,10 +6,13 @@
  * Defines constants used across many files of the project.
  */
 
+ //! Dimensions of the calorimeter, in meters.
+ /*! The front face of the
+     calorimeter is set to be the xy plane. We assume that it is a square
+     and the z axis represents the depth. */
+
 namespace CalConst {
-    //! Dimensions of the calorimeter, in meters. The front face of the
-    //!calorimeter is set to be the xy plane. We assume that it is a square
-    //! and the z axis represents the depth.
+
     static const float ZMin  = 0.; /*!< minimal value of z axis */
     static const float ZMax  = 1.; /*!< maximal value of z axis */
     static const float XYMin = -2.; /*!< minimal value of x and y axis */
