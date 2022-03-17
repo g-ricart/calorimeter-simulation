@@ -13,16 +13,16 @@
 
 namespace CalConst {
 
-    static const float ZMin  = 0.; /*!< minimal value of z axis */
-    static const float ZMax  = 1.; /*!< maximal value of z axis */
-    static const float XYMin = -2.; /*!< minimal value of x and y axis */
-    static const float XYMax = 2.; /*!< maximal value of x and y axis */
+    static const float ZMin  = 0.; /*!< Enum minimal value of z axis */
+    static const float ZMax  = 1.; /*!< Enum maximal value of z axis */
+    static const float XYMin = -2.; /*!< Enum minimal value of x and y axis */
+    static const float XYMax = 2.; /*!< Enum maximal value of x and y axis */
 
-    static const int NbCellsInXY = 40; /*!< number of cells in x (or y) direction */
-    static const int NbLayers    = 10; /*!< number of layers in z direction */
+    static const int NbCellsInXY = 40; /*!< Enum number of cells in x (or y) direction */
+    static const int NbLayers    = 10; /*!< Enum number of layers in z direction */
 
-    static const float XYSize = (XYMax - XYMin) / NbCellsInXY;/*!< Cell size in x-y*/
-    static const float ZSize  = (ZMax - ZMin) / NbLayers;/*!< Cell size in x-y*/
+    static const float XYSize = (XYMax - XYMin) / NbCellsInXY;/*!< Enum Cell size in x-y*/
+    static const float ZSize  = (ZMax - ZMin) / NbLayers;/*!< Enum Cell size in x-y*/
 }
 
 #endif
