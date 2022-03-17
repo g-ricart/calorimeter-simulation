@@ -4,16 +4,13 @@
 
 #include "TRandom.h"
 
-void simulate(Event& event)
+void simulate(Event& event, CaloSimulation& caloSim)
 {
     // simulate the event
     event.seteTrue(ShowConst::e0); // fixed true energy
 
-    // Build calorimeter
-    // CAN DO: Add a caloReset method to empty all cells and define only one
-    // calorimeter for all the events.
-    CaloSimulation caloSim;
-    caloSim.CalorimeterData();
+    // Reset calorimeter
+    caloSim.Reset();
 
     // Draw random point on calorimeter surface.
     float x = gRandom->Uniform(abs(CalConst::XYMin - CalConst::XYMax))

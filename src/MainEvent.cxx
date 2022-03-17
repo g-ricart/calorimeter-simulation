@@ -42,7 +42,7 @@
 using namespace std;
 
 void reconstruct(Event& event);
-void simulate(Event& event);
+void simulate(Event& event, CaloSimulation& caloSim);
 void ana_simu(Event& event);
 
 //______________________________________________________________________________
@@ -83,6 +83,10 @@ int main(int argc, char **argv)
     // Create a dummy event that will be build in the loop.
     Event event;
 
+    //Build calorimeter
+    CaloSimulation caloSim;
+    caloSim.CalorimeterData();
+
     // Loop over the events.
     for (eventNumber = 0; eventNumber < nEventsMax; eventNumber++) {
         if (eventNumber % 100 == 0) {
@@ -94,7 +98,7 @@ int main(int argc, char **argv)
         event.build(eventNumber);
 
         // simulation
-        simulate(event);
+        simulate(event, caloSim);
         ana_simu(event);
 
         // reconstruction
@@ -134,12 +138,12 @@ int main(int argc, char **argv)
                                  << caloGeo.zCentre(cell) << ")" << endl;
 
     // Check CaloSimulation::CalorimeterData implementation
-    CaloSimulation caloSim = CaloSimulation();
-    caloSim.CalorimeterData();
+    CaloSimulation testCaloSim = CaloSimulation();
+    testCaloSim.CalorimeterData();
     //cout << caloSim << endl;
 
     // Check CaloSimulation::SimulateShower implementation
-    caloSim.SimulateShower(0, 0, 50);
+    testCaloSim.SimulateShower(0, 0, 50);
     //cout << caloSim << endl;
 
     return 0;
