@@ -49,7 +49,7 @@ void ana_simu(Event& event);
 int main(int argc, char **argv)
 {
     // By default create 400 events.
-    int nEventsMax = 10;
+    int nEventsMax = 400;
     // If command line argument provided, take it as max number of events.
     if (argc > 1) nEventsMax = atoi(argv[1]);
 
