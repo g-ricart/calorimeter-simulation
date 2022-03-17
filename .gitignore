@@ -12,3 +12,6 @@ obj/
 
 # ROOT files
 *.root
+
+# html doc
+doc/html/
