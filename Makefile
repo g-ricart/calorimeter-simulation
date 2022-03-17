@@ -1,11 +1,8 @@
 SRCDIR		= src
 OBJDIR		= obj
 BINDIR		= bin
-#TSTDIR		= test
 EXE 		= MainEvent
-#TEST		= CaloImplementationTests
 SRCFILES	= $(wildcard $(SRCDIR)/*.cxx)
-#TSTFILES	= $(wildcard $(TSTDIR)/*.cxx)
 OBJFILES	= $(subst $(SRCDIR),$(OBJDIR),$(SRCFILES:.cxx=.o))
 
 # ROOT
@@ -30,12 +27,10 @@ $(info Linker: $(CXX) $(LDFLAGS))
 $(info )
 $(info Sources directory: $(SRCDIR))
 $(info Sources files: $(SRCFILES))
-#$(info Tests directory: $(TSTDIR))
-#$(info Tests files: $(TSTFILES))
 $(info Objects directory: $(OBJDIR))
 $(info Object files: $(OBJFILES))
 $(info Binary directory: $(BINDIR))
-$(info Executables: $(EXE)) #$(TEST))
+$(info Executables: $(EXE))
 $(info -------------------------------------)
 
 default: build $(EXE)
@@ -53,19 +48,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cxx
 	@echo "Compiling $< to $@"
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
-#test: build $(TEST)
-#	@echo "In test rule."
-
-#$(TEST): $(OBJDIR)/$(TEST).o $(OBJFILES)
-#	@echo ""
-#	@echo "Linking $@ from $^"
-#	$(CXX) $(OBJFILES) -o $(BINDIR)/$@ $(LDFLAGS)
-
-#$(OBJDIR)/%.o: $(SRCDIR)/%.cxx $(TSTDIR)/%.cxx
-#	@echo ""
-#	@echo "Compiling $< to $@"
-#	@$(CXX) $(CXXFLAGS) -c $< -o $@
-
 .PHONY: build
 build:
 	@mkdir -p $(OBJDIR)
@@ -76,4 +58,3 @@ clean:
 	@echo "Cleaning..."
 	rm -f $(OBJDIR)/*.o
 	rm -f $(BINDIR)/$(EXE)
-#	rm -f $(BINDIR)/$(TEST)
