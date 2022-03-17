@@ -24,15 +24,15 @@ void ana_simu(Event& event)
             int currentLayer = cellAddress.layer(); // Get layer of current cell
             int currentix    = cellAddress.ix();    // Get ix of current cell
             int currentiy    = cellAddress.iy();    // Get iy of current cell
-            layerEnergies[currentLayer] += cell.energy(); // Add energy of current
+            layerEnergies[currentLayer] += cell.energyTrue(); // Add energy of current
                                                           // cell to the layer
-            XYEnergies[currentix][currentiy] += cell.energy();
+            XYEnergies[currentix][currentiy] += cell.energyTrue();
         }
 
         TH1F* histZ = new TH1F(Form("histZ_%i", event.eventNumber()),
                                "Longitudinal energy loss",
                                CalConst::NbLayers, 0, CalConst::NbLayers);
-        for (size_t i = 0; i < sizeof(layerEnergies)/sizeof(layerEnergies[0]); i++){
+        for (size_t i = 0; i < CalConst::NbLayers; i++){
             histZ->SetBinContent(i+1, layerEnergies[i]);
         }
 
