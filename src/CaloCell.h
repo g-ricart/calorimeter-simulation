@@ -12,32 +12,32 @@ class CaloCell
 {
 public:
 
-	// Default constructor needed of containers of the standard template library.
-	CaloCell();
+    //! Default constructor needed of containers of the standard template library.
+    CaloCell();
 
-	// Full constructor.
-	CaloCell(const CellAddress& ca, float energy);
+    //! Full constructor.
+    CaloCell(const CellAddress& ca, float energy);
 
-    // Destructor
-    ~CaloCell();
+  //! Destructor
+  ~CaloCell();
 
-	// Accessors.
-	float energy() const;
-	CellAddress address() const;
+    // Accessors.
+    float energy() const;
+    CellAddress address() const;
 
-    // Setters.
-    void setEnergy(float energy);
+  // Setters.
+  void setEnergy(float energy);
 
-	// "Print" function.
-	friend std::ostream& operator<<(std::ostream& os, const CaloCell& y)
-	{
-		os << "[" << y.address() << ", " << y.energy() << "]";
-		return os;
-	}
+    // "Print" function.
+    friend std::ostream& operator<<(std::ostream& os, const CaloCell& y)
+    {
+        os << "[" << y.address() << ", " << y.energy() << "]";
+        return os;
+    }
 
 private:
-	float m_energy;
-	CellAddress m_address;
+    float m_energy;
+    CellAddress m_address;
 
 };
 

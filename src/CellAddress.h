@@ -13,97 +13,97 @@
 class CellAddress
 {
 public:
-	//! Default constructor, gives you an invalid address.
-	CellAddress();
+    //! Default constructor, gives you an invalid address.
+    CellAddress();
 
-	//! Full constructor.
-	/*!
-		\param ix integer: index of cell on x axis
-		\param iy integer: index of cell on y axis
-		\param layer integer: index of cell on z axis
-	*/
-	CellAddress(int ix, int iy, int layer);
+    //! Full constructor.
+    /*!
+        \param ix integer: index of cell on x axis
+        \param iy integer: index of cell on y axis
+        \param layer integer: index of cell on z axis
+    */
+    CellAddress(int ix, int iy, int layer);
 
   //! Destructor
   ~CellAddress();
 
-	//!  Function to know if the address of a cell is in the calorimeter
-	/*!
-		\return True if the address is valid
-	*/
-	bool IsValid() const;
+    //!  Function to know if the address of a cell is in the calorimeter
+    /*!
+        \return True if the address is valid
+    */
+    bool IsValid() const;
 
   //! Set cell index on x axis
   void setix(int ix) { m_ix = ix; }
-	//! Set cell index on y axis
+    //! Set cell index on y axis
   void setiy(int iy) { m_iy = iy; }
-	//! Set cell index on z axis
+    //! Set cell index on z axis
   void setlayer(int layer) { m_layer = layer; }
 
-	//! Access cell index on x axis
-	int ix() const;
-	//! Access cell index on y axis
-	int iy() const;
-	//! Access cell index on z axis
-	int layer() const;
+    //! Access cell index on x axis
+    int ix() const;
+    //! Access cell index on y axis
+    int iy() const;
+    //! Access cell index on z axis
+    int layer() const;
 
-	//! This defines comparator "<" between two CellAddress. This is necessary for
-	//! some container types of the standard template library (std).
+    //! This defines comparator "<" between two CellAddress. This is necessary for
+    //! some container types of the standard template library (std).
 
-	/*!
-		\param x : object of type const CellAddress
-		\return bool : compares elements of CellAddress. First ix, then iy
-										and then layer
-		\sa CellAddress(int ix, int iy, int layer)
-	*/
+    /*!
+        \param x : object of type const CellAddress
+        \return bool : compares elements of CellAddress. First ix, then iy
+                                        and then layer
+        \sa CellAddress(int ix, int iy, int layer)
+    */
 
 
-	bool operator<(const CellAddress& x) const
-	{
-		if (x.m_iy == this ->m_iy && x.m_ix == this->m_ix)
-		{
-			return (this->m_layer < x.m_layer);
-		}
+    bool operator<(const CellAddress& x) const
+    {
+        if (x.m_iy == this ->m_iy && x.m_ix == this->m_ix)
+        {
+            return (this->m_layer < x.m_layer);
+        }
 
-		if (x.m_ix == this->m_ix)
-		{
-			return (this->m_iy < x.m_iy);
-		}
+        if (x.m_ix == this->m_ix)
+        {
+            return (this->m_iy < x.m_iy);
+        }
 
-		return (this->m_ix < x.m_ix);
-	}
+        return (this->m_ix < x.m_ix);
+    }
 
-	//! This defines comparator ">" between two CellAddress. This is necessary for
-	//! some container types of the standard template library (std).
-	/*!
-		\param x : object of type const CellAddress
-		\return bool : compares elements of CellAddress. First ix, then iy
-										and then layer
-		\sa CellAddress(int ix, int iy, int layer)
-	*/
+    //! This defines comparator ">" between two CellAddress. This is necessary for
+    //! some container types of the standard template library (std).
+    /*!
+        \param x : object of type const CellAddress
+        \return bool : compares elements of CellAddress. First ix, then iy
+                                        and then layer
+        \sa CellAddress(int ix, int iy, int layer)
+    */
 
-	bool operator>(const CellAddress& x) const
-	{
-		if (x.m_iy == this ->m_iy && x.m_ix == this->m_ix) return (this->m_layer > x.m_layer);
-		if (x.m_ix == this->m_ix) return (this->m_iy > x.m_iy);
-		return (this->m_ix > x.m_ix);
-	}
+    bool operator>(const CellAddress& x) const
+    {
+        if (x.m_iy == this ->m_iy && x.m_ix == this->m_ix) return (this->m_layer > x.m_layer);
+        if (x.m_ix == this->m_ix) return (this->m_iy > x.m_iy);
+        return (this->m_ix > x.m_ix);
+    }
 
-	//! Display cell address content.
-	/*!
-		\sa CellAddress(int ix, int iy, int layer)
-	*/
-	friend std::ostream& operator<<(std::ostream& os, const CellAddress& y)
-	{
-		os << "(" << y.ix() << ", " << y.iy() << ", " << y.layer() << ")";
-		return os;
-	}
+    //! Display cell address content.
+    /*!
+        \sa CellAddress(int ix, int iy, int layer)
+    */
+    friend std::ostream& operator<<(std::ostream& os, const CellAddress& y)
+    {
+        os << "(" << y.ix() << ", " << y.iy() << ", " << y.layer() << ")";
+        return os;
+    }
 
 private:
-	// declaration of private variables
-	int m_ix;
-	int m_iy;
-	int m_layer;
+    // declaration of private variables
+    int m_ix;
+    int m_iy;
+    int m_layer;
 
 };
 
