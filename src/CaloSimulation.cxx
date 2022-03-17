@@ -72,6 +72,14 @@ void CaloSimulation::SimulateShower(float xImpact, float yImpact, float energy)
     }
 }
 
+//______________________________________________________________________________
+void CaloSimulation::Reset()
+{
+    for (auto const& it: m_caldata) {
+        m_caldata[cellAddress].setEnergy(0);
+    }
+}
+
 
 //______________________________________________________________________________
 Double_t CaloSimulation::FunctionObjectdEdz::operator()(Double_t *x,

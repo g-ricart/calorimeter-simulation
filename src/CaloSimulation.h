@@ -41,6 +41,9 @@ public:
     // iterate over each cell of the map and compute cell energy
 	void SimulateShower(float x, float y, float energy);
 
+    // Set all cell energy to zero.
+    void Reset();
+
     // Longitudinal deposited energy function
     class FunctionObjectdEdz
     {
