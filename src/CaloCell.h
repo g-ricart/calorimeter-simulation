@@ -21,18 +21,22 @@ public:
         \param energy float : energy in the cell
         \sa CellAddress()
     */
-    CaloCell(const CellAddress& ca, float energy);
+    CaloCell(const CellAddress& ca, float energyTrue, float energyMeas);
 
     //! Destructor.
     ~CaloCell();
 
-    //! Access energy of the cell
-    float energy() const;
-    //! Acess address of the cell
-    CellAddress address() const;
+    //! Access true energy of the cell.
+    float energyTrue() const { return m_energyTrue; }
+    //! Access measured energy of the cell.
+    float energyMeas() const { return m_energyMeas; }
+    //! Acess address of the cell.
+    CellAddress address() const { return m_address; }
 
-    //! Set energy of the cell
-    void setEnergy(float energy);
+    //! Set true energy of the cell.
+    void setEnergyTrue(float energyTrue) { m_energyTrue = energyTrue; }
+    //! Set measured energy of the cell.
+    void setEnergyMeas(float energyMeas) { m_energyMeas = energyMeas; }
 
     //! "Print" function for CaloCell.
     /*!
@@ -40,12 +44,13 @@ public:
     */
     friend std::ostream& operator<<(std::ostream& os, const CaloCell& y)
     {
-        os << "[" << y.address() << ", " << y.energy() << "]";
+        os << "[" << y.address() << ", " << y.energyTrue() << ", " << y.energyMeas() << "]";
         return os;
     }
 
 private:
-    float m_energy;
+    float       m_energyTrue; // True enregy of the cell
+    float       m_energyMeas; // True energy smeared with a gaussian
     CellAddress m_address;
 
 };

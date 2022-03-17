@@ -18,7 +18,7 @@ void CaloSimulation::CalorimeterData()
             for (size_t ix = 0; ix < CalConst::NbCellsInXY; ix++) {
 
                 CellAddress cellAddress = CellAddress(ix, iy, layer);
-                CaloCell cell = CaloCell(cellAddress, 0.);
+                CaloCell cell = CaloCell(cellAddress, 0., 0.);
 
                 m_caldata[cellAddress] = cell;
             }
@@ -29,6 +29,8 @@ void CaloSimulation::CalorimeterData()
 //______________________________________________________________________________
 void CaloSimulation::SimulateShower(float xImpact, float yImpact, float energy)
 {
+    TRandom3 *rand = new TRandom3(0);
+
     FunctionObjectdEdz fdEdz;
     TF1* dEdz = new TF1("dEdz", fdEdz, CalConst::ZMin, CalConst::ZMax, 1);
     dEdz->SetParName(0, "E0");
@@ -63,10 +65,18 @@ void CaloSimulation::SimulateShower(float xImpact, float yImpact, float energy)
                 float y1 = float(iy + 1)*CalConst::XYSize + CalConst::XYMin;
 
                 float cellEnergyRatio = dETrans->Integral(x0, x1, y0, y1);
-                float cellEnergy = cellEnergyRatio*layerEnergy;
+                float cellEnergyTrue = cellEnergyRatio*layerEnergy;
+
+                // Smear true energy value by a gaussian to emulate calo response
+                float eReso = 0.1 * sqrt(cellEnergyTrue/ShowConst::e0);
+                float cellEnergyMeas = cellEnergyTrue + rand->Gaus(0, eReso);
 
                 CellAddress cellAddress = CellAddress(ix, iy, layer);
-                m_caldata[cellAddress].setEnergy(cellEnergy);
+                m_caldata[cellAddress].setEnergyTrue(cellEnergyTrue);
+                m_caldata[cellAddress].setEnergyMeas(cellEnergyMeas);
+
+                m_eTrueTot += cellEnergyTrue;
+                m_eMeasTot += cellEnergyMeas;
             }
         }
     }
@@ -76,8 +86,12 @@ void CaloSimulation::SimulateShower(float xImpact, float yImpact, float energy)
 void CaloSimulation::Reset()
 {
     for (auto& it: m_caldata) {
-        it.second.setEnergy(0);
+        it.second.setEnergyTrue(0.);
+        it.second.setEnergyMeas(0.);
     }
+
+    m_eTrueTot = 0.;
+    m_eMeasTot = 0.;
 }
 
 

@@ -10,6 +10,7 @@
 #include "CaloCell.h"
 #include "CaloConstants.h"
 #include "ShowerConstants.h"
+#include "TRandom3.h"
 
 #include "TF1.h"
 #include "TF2.h"
@@ -41,7 +42,7 @@ public:
     // iterate over each cell of the map and compute cell energy
     void SimulateShower(float x, float y, float energy);
 
-    // Set all cell energy to zero.
+    // Set all cell energy and total energy to zero.
     void Reset();
 
     // Longitudinal deposited energy function
@@ -59,7 +60,9 @@ public:
     };
 
     // Getters
-    CalData GetCalData() { return m_caldata; }
+    CalData GetCalData()  { return m_caldata; }
+    float   GeteTrueTot() { return m_eTrueTot; }
+    float   GeteMeasTot() { return m_eMeasTot; }
 
     // Print all the cells.
     friend std::ostream& operator<<(std::ostream& os, const CaloSimulation& cs)
@@ -73,6 +76,8 @@ public:
 
 private:
     CalData m_caldata;
+    float   m_eTrueTot; // total true energy
+    float   m_eMeasTot; // total measured energy
 
 };
 
