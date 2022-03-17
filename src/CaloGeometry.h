@@ -29,6 +29,11 @@ public:
     static double yCentre(const CellAddress& cellAddress);
     static double zCentre(const CellAddress& cellAddress);
 
+    // Give the list of centers.
+    void xCenters(float*     xCenterArray);
+    void yCenters(float*     yCenterArray);
+    void layerCenters(float* layerCentersArray);
+
 private:
 
 };

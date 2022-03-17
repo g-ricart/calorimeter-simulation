@@ -43,3 +43,21 @@ double CaloGeometry::zCentre(const CellAddress& cellAddress)
 {
     return double(cellAddress.layer() + 0.5)*CalConst::ZSize + CalConst::ZMin;
 }
+
+//______________________________________________________________________________
+void xCenters(float* xCenterArray)
+{
+
+}
+
+//______________________________________________________________________________
+void yCenters(float* yCenterArray)
+{
+
+}
+
+//______________________________________________________________________________
+void layerCenters(float* layerCentersArray)
+{
+
+}
