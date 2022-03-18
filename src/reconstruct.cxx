@@ -56,7 +56,6 @@ void reconstruct(Event& event,
 
     float xReco = 0.;
     float yReco = 0.;
-    int   nbRecoLayer = 0;
 
     // Gaussian fit of X and Y energy distributions for each layer above
     // threshold.
