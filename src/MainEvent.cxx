@@ -41,7 +41,11 @@
 
 using namespace std;
 
-void reconstruct(Event& event);
+void reconstruct(Event& event,
+                 TF1*   fitFunc,
+                 float* xCenterArray,
+                 float* yCenterArray,
+                 float* layerCenterArray);
 void simulate(Event& event, CaloSimulation& caloSim);
 void ana_simu(Event& event);
 
@@ -91,7 +95,9 @@ int main(int argc, char **argv)
     // Create a dummy event that will be build in the loop.
     Event event;
 
-    // Build calorimeter
+    // Build calorimeter,
+    // defined here to avoid building it for each event.
+    // passed to simulate().
     CaloSimulation caloSim;
     caloSim.CalorimeterData();
 
@@ -106,6 +112,16 @@ int main(int argc, char **argv)
     caloGeometry.layerCenters(layerCenterArray);
     caloGeometry.xCenters(xCenterArray);
     CaloGeometry.yCenters(yCenterArray);
+
+    // Function to recontruct impact point,
+    // defined here to avoid building it for each event.
+    // Passed to reconstruct().
+    TF1* gausFit = new TF1("gausFit", "gaus(0)", CalConst::XYMin,
+                                                 CalConst::XYMax);
+    gausFit->SetParName(0, "const");
+    gausFit->SetParName(1, "mean");
+    gausFit->SetParName(2, "sigma");
+    gausFit->SetParLimits("mean", CalConst::XYMin, CalConst::XYMax);
 
     // Loop over the events.
     for (eventNumber = 0; eventNumber < nEventsMax; eventNumber++) {
@@ -122,7 +138,9 @@ int main(int argc, char **argv)
         ana_simu(event);
 
         // reconstruction
-        reconstruct(event, caloSim);
+        reconstruct(event, gausFit, xCenterArray,
+                                    yCenterArray,
+                                    layerCenterArray);
 
         // Prepare to fill the output tree.
         eTrue       = event.eTrue();
