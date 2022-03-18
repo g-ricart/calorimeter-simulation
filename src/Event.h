@@ -6,7 +6,7 @@
 #include "TH2F.h"
 
 /**
- * @bried Event class.
+ * \class Event class.
  * @details This class describes an event.
  */
 class Event {

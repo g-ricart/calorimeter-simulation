@@ -2,7 +2,7 @@
 #define CaloCell_h
 
 /**
- * CaloCell
+ * \class CaloCell
  * Reprensents a cell of the calorimeter, and its energy.
  */
 
