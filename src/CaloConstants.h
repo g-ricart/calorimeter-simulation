@@ -12,6 +12,7 @@
  /*! The front face of the calorimeter is set to be the xy plane.
      We assume that it is a square and the z axis represents the depth.
      */
+ //! Threshold energy deposited in a layer to reconstruct its impact point.
 
 namespace CalConst {
 
@@ -28,6 +29,9 @@ namespace CalConst {
     // Size of the cells
     static const float XYSize = (XYMax - XYMin) / NbCellsInXY;
     static const float ZSize  = (ZMax - ZMin) / NbLayers;
+
+    // Layer threshold energy to reconstruct impact point
+    static const float layerEnrThr = 1e-6;
 }
 
 #endif
