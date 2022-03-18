@@ -111,7 +111,7 @@ int main(int argc, char **argv)
     CaloGeometry caloGeometry;
     caloGeometry.layerCenters(layerCenterArray);
     caloGeometry.xCenters(xCenterArray);
-    CaloGeometry.yCenters(yCenterArray);
+    caloGeometry.yCenters(yCenterArray);
 
     // Function to recontruct impact point,
     // defined here to avoid building it for each event.
@@ -121,7 +121,7 @@ int main(int argc, char **argv)
     gausFit->SetParName(0, "const");
     gausFit->SetParName(1, "mean");
     gausFit->SetParName(2, "sigma");
-    gausFit->SetParLimits("mean", CalConst::XYMin, CalConst::XYMax);
+    gausFit->SetParLimits(1, CalConst::XYMin, CalConst::XYMax);
 
     // Loop over the events.
     for (eventNumber = 0; eventNumber < nEventsMax; eventNumber++) {

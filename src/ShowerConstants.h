@@ -1,6 +1,8 @@
 #ifndef ShowerConstants_h
 #define ShowerConstants_h
 
+#include "CaloConstants.h"
+
 /**
  * ShowerConstants
  * Defines constants for the shower simulation

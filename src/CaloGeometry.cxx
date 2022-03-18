@@ -45,7 +45,7 @@ double CaloGeometry::zCentre(const CellAddress& cellAddress)
 }
 
 //______________________________________________________________________________
-void xCenters(float* xCenterArray)
+void CaloGeometry::xCenters(float* xCenterArray)
 {
     for (size_t i = 0; i < CalConst::NbCellsInXY; i++) {
         xCenterArray[i] = (float(i) + 0.5)*CalConst::XYSize + CalConst::XYMin;
@@ -53,16 +53,18 @@ void xCenters(float* xCenterArray)
 }
 
 //______________________________________________________________________________
-void yCenters(float* yCenterArray)
+void CaloGeometry::yCenters(float* yCenterArray)
 {
     for (size_t i = 0; i < CalConst::NbCellsInXY; i++) {
         yCenterArray[i] = (float(i) + 0.5)*CalConst::XYSize + CalConst::XYMin;
+    }
 }
 
 //______________________________________________________________________________
-void layerCenters(float* layerCentersArray)
+void CaloGeometry::layerCenters(float* layerCenterArray)
 {
     for (size_t i = 0; i < CalConst::NbLayers; i++) {
-        leyersCenterArray[i] = (float(i) + 0.5)*CalConst::ZSize
+        layerCenterArray[i] = (float(i) + 0.5)*CalConst::ZSize
                              + CalConst::ZMin;
+    }
 }
