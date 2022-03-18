@@ -1,6 +1,7 @@
 #include <cmath>
 
 #include "TRandom3.h"
+#include "TGraph.h"
 #include "TF1.h"
 
 #include "ShowerConstants.h"
@@ -15,7 +16,10 @@ using namespace std;
  * @brief This function generates the reconstructed impact point.
  * @param[in] event Event object.
  */
-void reconstruct(Event& event, CaloSimulation& caloSim)
+void reconstruct(Event& event, CaloSimulation& caloSim,
+                float* xCenterArray,
+                float* yCenterArray,
+                float* layerCenterArray)
 {
     CaloSimulation::CalData calData = caloSim.GetCalData();
 
@@ -40,4 +44,15 @@ void reconstruct(Event& event, CaloSimulation& caloSim)
         xEnergies[ix]        += energy;
         yEnergies[iy]        += energy;
     }
+
+    // TGraphs to fit X and Y energies
+    TGraph* graphX = new TGraph(CalConst::NbCellsInXY, xCenterArray, xEnergies);
+    TGraph* graphY = new TGraph(CalConst::NbCellsInXY, yCenterArray, yEnergies);
+
+    TF1* gausFit = new TF1("gausFit", "gaus(0)", CalConst::XYMin,
+                                                 CalConst::XYMax);
+    gausFit->SetParName(0, "const");
+    gausFit->SetParName(1, "mean");
+    gausFit->SetParName(2, "sigma");
+
 }
