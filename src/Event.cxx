@@ -24,4 +24,8 @@ void Event::build(int eventNumber)
     m_eRecoBias   = -999.;
     m_xReco       = -999.;
     m_yReco       = -999.;
+    m_xTrue       = -999.;
+    m_yTrue       = -999.;
+    m_xReco       = -999.;
+    m_yReco       = -999.;
 }
