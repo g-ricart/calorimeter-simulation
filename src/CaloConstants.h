@@ -2,7 +2,7 @@
 #define CaloConstants_h
 
 /**
- * CaloConstants
+ * \namespace CaloConstants
  * Defines constants used across many files of the project.
  */
 
