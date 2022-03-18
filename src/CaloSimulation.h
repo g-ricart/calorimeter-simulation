@@ -2,7 +2,7 @@
 #define CaloSimulation_h
 
 /**
- * CaloSimulation
+ * \class CaloSimulation
  * Implements the simulation of the calorimter.
  */
 
@@ -24,47 +24,69 @@ class CaloSimulation
 
 public:
 
+    /*!
+        \typedef CalData
+        Defines a type allowing to store calorimeter data.
+        Map with keys being of type CellAddress and values of type CaloCell
+        \sa CellAddress
+        \sa CaloCell
+    */
     typedef std::map<CellAddress, CaloCell> CalData;
 
-    // Constructor
+    //! Constructor
     CaloSimulation();
 
-    //Destructor
+    //! Destructor
     ~CaloSimulation();
 
-    // Add the calorimeter cells to the map of cell caldata.
+    //! Add the calorimeter cells to the map of cell caldata.
     void CalorimeterData();
 
-    // Simulate a shower of a given energy, starting from the impact point (x,y)
-    // of the electron at the front end of the calorimeter.
+    /*! Simulate a shower of a given energy, starting from the impact point (x,y)
+        of the electron at the front end of the calorimeter.
+        \param x float: position of impact point on x axis
+        \param y float: position of impact point on y axis
+        \param energy float: initial energy of the particle
+    */
+    void SimulateShower(float x, float y, float energy);
+
     // CAN DO: creat layer class including all cells of the same layer in a map
     // iterate over each layer to get map + layer energy
     // iterate over each cell of the map and compute cell energy
-    void SimulateShower(float x, float y, float energy);
 
-    // Set all cell energy and total energy to zero.
+    //! Set all cell energy and total energy to zero.
     void Reset();
 
-    // Longitudinal deposited energy function
+    /*!
+        \class FunctionObjectdEdz
+        Longitudinal deposited energy function
+    */
     class FunctionObjectdEdz
     {
     public:
+        //! Definition of the operator allowing to call the object
         Double_t operator()(Double_t *x, Double_t *p);
     };
 
-    // Transverse deposited energy function
+    /*!
+        \class FunctionObjectdEdz
+        Transverse deposited energy function
+    */
     class FunctionObjectdETrans
     {
     public:
+        //! Definition of the operator allowing to call the object
         Double_t operator()(Double_t *x, Double_t *p);
     };
 
-    // Getters
+    //! Get the calorimeter data caldata (type CalData)
     CalData GetCalData()  { return m_caldata;  }
+    //! Get the total true energy deposited in the calorimeter (type float)
     float   GeteTrueTot() { return m_eTrueTot; }
+    //! Get the total measured energy deposited in the calorimeter (type float)
     float   GeteMeasTot() { return m_eMeasTot; }
 
-    // Print all the cells.
+    //!"Print" function for CaloSimulation
     friend std::ostream& operator<<(std::ostream& os, const CaloSimulation& cs)
     {
         for (auto const& x: cs.m_caldata) {

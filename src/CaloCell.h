@@ -19,7 +19,7 @@ public:
     /*!
         \param ca object of type CellAddress
         \param energy float : energy in the cell
-        \sa CellAddress()
+        \sa CellAddress
     */
     CaloCell(const CellAddress& ca, float energyTrue, float energyMeas);
 
@@ -38,8 +38,8 @@ public:
     //! Set measured energy of the cell.
     void setEnergyMeas(float energyMeas) { m_energyMeas = energyMeas; }
 
-    //! "Print" function for CaloCell.
     /*!
+        "Print" function for CaloCell.
         \sa CaloCell(const CellAddress& ca, float energy)
     */
     friend std::ostream& operator<<(std::ostream& os, const CaloCell& y)
