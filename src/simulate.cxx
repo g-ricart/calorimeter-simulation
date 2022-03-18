@@ -7,7 +7,6 @@
 void simulate(Event& event, CaloSimulation& caloSim)
 {
     // simulate the event
-    event.seteTrue(ShowConst::e0); // fixed true energy
 
     // Reset calorimeter
     caloSim.Reset();
@@ -22,8 +21,15 @@ void simulate(Event& event, CaloSimulation& caloSim)
     caloSim.SimulateShower(x, y, ShowConst::e0);
     CaloSimulation::CalData calData = caloSim.GetCalData();
 
+    // Get total measured energy.
+    float eMeasTot = caloSim.GeteMeasTot();
+    // Get total true energy.
+    float eTrueTot = caloSim.GeteTrueTot();
+
     // Store variables in event
     event.setxTrue(x);
     event.setyTrue(y);
     event.setCalData(calData);
+    event.seteTrue(eTrueTot);
+    event.seteReco(eMeasTot);
 }
