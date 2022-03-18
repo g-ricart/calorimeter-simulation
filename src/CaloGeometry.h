@@ -32,7 +32,7 @@ public:
     // Give the list of centers.
     void xCenters(float*     xCenterArray);
     void yCenters(float*     yCenterArray);
-    void layerCenters(float* layerCentersArray);
+    void layerCenters(float* layerCenterArray);
 
 private:
 
