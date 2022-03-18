@@ -5,6 +5,7 @@
 #include "TF1.h"
 
 #include "ShowerConstants.h"
+#include "CaloConstants.h"
 #include "Event.h"
 #include "CaloSimulation.h"
 #include "CaloCell.h"
@@ -36,10 +37,10 @@ void reconstruct(Event& event,
         currentAddress = it.first;
         currentCell    = it.second;
 
-        float layer  = currentAddress.layer();
-        float ix     = currentAddress.ix();
-        float iy     = currentAddress.iy();
-        float energy = currentAddress.energyMeas()
+        int layer  = currentAddress.layer();
+        int ix     = currentAddress.ix();
+        int iy     = currentAddress.iy();
+        float energy = currentCell.energyMeas();
 
         layerEnergies[layer] += energy;
         xEnergies[ix]        += energy;
@@ -49,6 +50,12 @@ void reconstruct(Event& event,
     float xReco = 0.;
     float yReco = 0.;
     int   nbRecoLayer = 0;
+
+    // Gaussian fit of X and Y energy distributions for each layer above
+    // threshold.
+    // The maximum of the fit is taken as the reconstructed impact point.
+    // A weighted mean on all reconstructed positions is computed to get the
+    // final reconstructed impact x and y.
 
     for (size_t layer = 0; layer < CalConst::NbLayers; layer++) {
 
@@ -60,11 +67,17 @@ void reconstruct(Event& event,
             TGraph* graphX = new TGraph(CalConst::NbCellsInXY, xCenterArray, xEnergies);
             TGraph* graphY = new TGraph(CalConst::NbCellsInXY, yCenterArray, yEnergies);
 
-            graphX->Fit(fitFunc, "E");
+            graphX->Fit(fitFunc, "NOQ");
             xReco += fitFunc->GetParameter("mean")*layerEnergy;
 
-            graphY->Fit(fitFunc, "E");
+            graphY->Fit(fitFunc, "NOQ");
             yReco += fitFunc->GetParameter("mean")*layerEnergy;
         }
+
+    xReco /= event.eReco();
+    yReco /= event.eReco();
+
+    event.setxReco(xReco);
+    event.setyReco(yReco);
     }
 }
