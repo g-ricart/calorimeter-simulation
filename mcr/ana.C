@@ -1,3 +1,11 @@
+#include "TFile.h"
+#include "TTree.h"
+#include "TH1F.h"
+#include "TH2F.h"
+#include "TMath.h"
+
+#include "../src/CaloConstants.h"
+
 void ana(TString file_path)
 {
     // macro to plot distributions from the Event tree
@@ -7,22 +15,46 @@ void ana(TString file_path)
     TTree* inTree = (TTree*)inFile->Get("eventTree");
 
     // Set branch addresses.
-    Int_t eventNumber;
-    Float_t eReco;
-    Float_t eTrue;
-    Float_t eRecoBias;
+    int eventNumber;
+    float eTrue;
+    float eReco;
+    float eRecoBias;
+    float xTrue;
+    float yTrue;
+    float xReco;
+    float yReco;
+    TH1F* histZ  = new TH1F();
+    TH2F* histXY = new TH2F();
     inTree->SetBranchAddress("eventNumber", &eventNumber);
-    inTree->SetBranchAddress("eReco",       &eReco);
     inTree->SetBranchAddress("eTrue",       &eTrue);
+    inTree->SetBranchAddress("eReco",       &eReco);
     inTree->SetBranchAddress("eRecoBias",   &eRecoBias);
+    inTree->SetBranchAddress("xTrue",       &xTrue);
+    inTree->SetBranchAddress("yTrue",       &yTrue);
+    inTree->SetBranchAddress("xReco",       &xReco);
+    inTree->SetBranchAddress("yReco",       &yReco);
+    inTree->SetBranchAddress("histZ",       &histZ);
+    inTree->SetBranchAddress("histXY",      &histXY);
 
     // Create histograms
-    TH1F* resolution = new TH1F("hist_reso", "Resolution distribution", 100, -1, 1);
-    resolution->GetXaxis()->SetTitle("eRecoBias - eTrue [GeV]");
-    resolution->SetStats(0);
+    TH1F* eReso = new TH1F("hist_eReso",
+                           "Energy resolution distribution",
+                           100, -1, 1);
+    eReso->GetXaxis()->SetTitle("eReco - eTrue [GeV]");
+
+    TH1F* xReso = new TH1F("hist_xReso",
+                           "X resolution distribution",
+                           100, -CalConst::XYSize*10, CalConst::XYSize*10);
+    xReso->GetXaxis()->SetTitle("xReco - xTrue [m]");
 
     // Fit functions
-    TF1* fit_gaus = new TF1("fit_gaus", "gaus", -999, 999);
+    TF1* fit_gaus = new TF1("fit_gaus", "gaus(0)",
+                            -999, 999);
+    fit_gaus->SetNpx(10000);
+    fit_gaus->SetParLimits(1, CalConst::XYMin, CalConst::XYMax);
+    fit_gaus->SetParName(0, "const");
+    fit_gaus->SetParName(1, "mean");
+    fit_gaus->SetParName(2, "sigma");
     fit_gaus->SetLineColor(kRed);
 
     // Loop over tree entries.
@@ -30,18 +62,13 @@ void ana(TString file_path)
         inTree->GetEntry(entryId);
 
         // Fill histograms
-        resolution->Fill(eRecoBias - eTrue);
+        eReso->Fill(eReco - eTrue);
+        xReso->Fill(xReco - xTrue);
     }
 
     // Fit histograms
-    resolution->Fit(fit_gaus, "E");
-
-    // Get fit parameters
-    auto chi2      = fit_gaus->GetChisquare();
-    auto ndof      = fit_gaus->GetNDF();
-    auto mean      = fit_gaus->GetParameter(1);
-    auto sigma     = fit_gaus->GetParameter(2);
-    auto sigma_err = fit_gaus->GetParError(2);
+    auto eResoFitResults = eReso->Fit((TF1*)fit_gaus->Clone("fit_eReso"), "OE");
+    // auto xResoFitResults = xReso->Fit((TF1*)fit_gaus->Clone("fit_xReso"), "E");
 
     // Outputs
     cout <<  inFile << endl; // check the pointer to the root file
@@ -51,7 +78,12 @@ void ana(TString file_path)
 
     // Draw histograms
     TCanvas* c1 = new TCanvas("c1", "", 0, 0, 1000, 800);
-    resolution->Draw();
-    fit_gaus->Draw("same");
+    eReso->Draw();
+    eReso->GetFunction("fit_eReso")->Draw("same");
     c1->Update();
+
+    TCanvas* c2 = new TCanvas("c2", "", 0, 0, 1000, 800);
+    xReso->Draw();
+    // xReso->GetFunction("fit_xReso")->Draw("same");
+    c2->Update();
 }
