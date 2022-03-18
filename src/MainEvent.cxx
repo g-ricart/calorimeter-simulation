@@ -49,6 +49,8 @@ void reconstruct(Event& event,
 void simulate(Event& event, CaloSimulation& caloSim);
 void ana_simu(Event& event);
 
+bool gPrintViaErrorHandler = true; // Force Minuit to silence.
+
 //______________________________________________________________________________
 int main(int argc, char **argv)
 {
