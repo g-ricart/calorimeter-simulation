@@ -16,12 +16,13 @@ using namespace std;
  * @brief This function generates the reconstructed impact point.
  * @param[in] event Event object.
  */
-void reconstruct(Event& event, CaloSimulation& caloSim,
-                float* xCenterArray,
-                float* yCenterArray,
-                float* layerCenterArray)
+void reconstruct(Event& event,
+                 TF1*   fitFunc,
+                 float* xCenterArray,
+                 float* yCenterArray,
+                 float* layerCenterArray)
 {
-    CaloSimulation::CalData calData = caloSim.GetCalData();
+    CaloSimulation::CalData calData = event.calData();
 
     CellAddress currentAddress;
     CaloCell    currentCell;
@@ -45,14 +46,25 @@ void reconstruct(Event& event, CaloSimulation& caloSim,
         yEnergies[iy]        += energy;
     }
 
-    // TGraphs to fit X and Y energies
-    TGraph* graphX = new TGraph(CalConst::NbCellsInXY, xCenterArray, xEnergies);
-    TGraph* graphY = new TGraph(CalConst::NbCellsInXY, yCenterArray, yEnergies);
+    float xReco = 0.;
+    float yReco = 0.;
+    int   nbRecoLayer = 0;
 
-    TF1* gausFit = new TF1("gausFit", "gaus(0)", CalConst::XYMin,
-                                                 CalConst::XYMax);
-    gausFit->SetParName(0, "const");
-    gausFit->SetParName(1, "mean");
-    gausFit->SetParName(2, "sigma");
+    for (size_t layer = 0; layer < CalConst::NbLayers; layer++) {
 
+        float layerEnergy = layerEnergies[layer];
+
+        if (layerEnergy <= CalConst::layerEnrThr) {
+
+            // TGraphs to fit X and Y energies
+            TGraph* graphX = new TGraph(CalConst::NbCellsInXY, xCenterArray, xEnergies);
+            TGraph* graphY = new TGraph(CalConst::NbCellsInXY, yCenterArray, yEnergies);
+
+            graphX->Fit(fitFunc, "E");
+            xReco += fitFunc->GetParameter("mean")*layerEnergy;
+
+            graphY->Fit(fitFunc, "E");
+            yReco += fitFunc->GetParameter("mean")*layerEnergy;
+        }
+    }
 }
