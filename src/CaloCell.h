@@ -30,7 +30,7 @@ public:
     float energyTrue() const { return m_energyTrue; }
     //! Access measured energy of the cell.
     float energyMeas() const { return m_energyMeas; }
-    //! Acess address of the cell.
+    //! Access address of the cell.
     CellAddress address() const { return m_address; }
 
     //! Set true energy of the cell.
