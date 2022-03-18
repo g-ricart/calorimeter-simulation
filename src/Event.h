@@ -62,7 +62,7 @@ public:
     /*!
         \param caldata: object of type CalData
         \sa CaloSimulation
-        \sa CalData
+        \sa CaloSimulation::CalData
     */
     void setCalData(CaloSimulation::CalData caldata) { m_caldata = caldata; }
     //! Set the histogram fill with the energy in Z axis
@@ -89,7 +89,7 @@ public:
     float  yReco()                    const { return m_yReco; }
     /*!
         Get the map (object of type : CaloData) with caracteristic of all cells
-        \sa CalData
+        \sa CaloSimulation::CalData
     */
     CaloSimulation::CalData calData() const { return m_caldata; }
     //! Get the histogram fill with the energy in Z axis

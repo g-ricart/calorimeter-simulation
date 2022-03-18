@@ -2,7 +2,7 @@
 #define ShowerConstants_h
 
 /**
- * \namespace ShowerConstants
+ * ShowerConstants
  * Defines constants for the shower simulation
  */
 
