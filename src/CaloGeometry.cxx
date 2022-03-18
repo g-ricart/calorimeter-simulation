@@ -47,17 +47,22 @@ double CaloGeometry::zCentre(const CellAddress& cellAddress)
 //______________________________________________________________________________
 void xCenters(float* xCenterArray)
 {
-
+    for (size_t i = 0; i < CalConst::NbCellsInXY; i++) {
+        xCenterArray[i] = (float(i) + 0.5)*CalConst::XYSize + CalConst::XYMin;
+    }
 }
 
 //______________________________________________________________________________
 void yCenters(float* yCenterArray)
 {
-
+    for (size_t i = 0; i < CalConst::NbCellsInXY; i++) {
+        yCenterArray[i] = (float(i) + 0.5)*CalConst::XYSize + CalConst::XYMin;
 }
 
 //______________________________________________________________________________
 void layerCenters(float* layerCentersArray)
 {
-
+    for (size_t i = 0; i < CalConst::NbLayers; i++) {
+        leyersCenterArray[i] = (float(i) + 0.5)*CalConst::ZSize
+                             + CalConst::ZMin;
 }
