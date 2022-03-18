@@ -91,9 +91,21 @@ int main(int argc, char **argv)
     // Create a dummy event that will be build in the loop.
     Event event;
 
-    //Build calorimeter
+    // Build calorimeter
     CaloSimulation caloSim;
     caloSim.CalorimeterData();
+
+    // Arrays to store XYZ cell centers,
+    // defined here to avoid building them for each event.
+    // Passed to reconstruct().
+    float layerCenterArray[CalConst::NbLayers] = {0.};
+    float xCenterArray[CalConst::NbCellsInXY]  = {0.};
+    float yCenterArray[CalConst::NbCellsInXY]  = {0.};
+
+    CaloGeometry caloGeometry;
+    caloGeometry.layerCenters(layerCenterArray);
+    caloGeometry.xCenters(xCenterArray);
+    CaloGeometry.yCenters(yCenterArray);
 
     // Loop over the events.
     for (eventNumber = 0; eventNumber < nEventsMax; eventNumber++) {
