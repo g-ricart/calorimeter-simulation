@@ -89,8 +89,7 @@ void reconstruct(Event& event,
     xReco /= event.eReco();
     yReco /= event.eReco();
 
-
-    // S-shape correction TODO
+    // S-shape correction
     float xRecoCor = xReco - sShapeX(xReco - int(xReco/CalConst::XYSize)
                                                  *CalConst::XYSize);
     float yRecoCor = yReco - sShapeY(yReco - int(yReco/CalConst::XYSize)
