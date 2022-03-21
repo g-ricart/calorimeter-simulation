@@ -23,6 +23,8 @@ void ana(TString file_path)
     float yTrue;
     float xReco;
     float yReco;
+    float xRecoCor;
+    float yRecoCor;
     TH1F* histZ  = new TH1F();
     TH2F* histXY = new TH2F();
     inTree->SetBranchAddress("eventNumber", &eventNumber);
@@ -33,6 +35,8 @@ void ana(TString file_path)
     inTree->SetBranchAddress("yTrue",       &yTrue);
     inTree->SetBranchAddress("xReco",       &xReco);
     inTree->SetBranchAddress("yReco",       &yReco);
+    inTree->SetBranchAddress("xRecoCor",    &xRecoCor);
+    inTree->SetBranchAddress("yRecoCor",    &yRecoCor);
     inTree->SetBranchAddress("histZ",       &histZ);
     inTree->SetBranchAddress("histXY",      &histXY);
 
@@ -42,10 +46,22 @@ void ana(TString file_path)
                            100, -1, 1);
     eReso->GetXaxis()->SetTitle("eReco - eTrue [GeV]");
 
-    TH1F* xReso = new TH1F("hist_xReso",
-                           "X resolution distribution",
-                           100, -CalConst::XYSize*10, CalConst::XYSize*10);
-    xReso->GetXaxis()->SetTitle("xReco - xTrue [m]");
+    TH1F* xResoRaw = new TH1F("hist_xResoRaw",
+                              "X raw resolution distribution",
+                              100, -0.003, 0.003);
+    xResoRaw->GetXaxis()->SetTitle("xReco - xTrue [m]");
+
+    TH1F* yResoRaw = new TH1F("hist_yResoRaw",
+                              "Y raw resolution distribution",
+                              100, -0.003, 0.003);
+
+    TH1F* xResoCor = new TH1F("hist_xResoCor",
+                              "X corrected resolution distribution",
+                              1000, -1, 1);
+
+    TH1F* yResoCor = new TH1F("hist_yResoCor",
+                              "Y corrected resolution distribution",
+                              100, -0.003, 0.003);
 
     // Fit functions
     TF1* fit_gaus = new TF1("fit_gaus", "gaus(0)",
@@ -63,7 +79,10 @@ void ana(TString file_path)
 
         // Fill histograms
         eReso->Fill(eReco - eTrue);
-        xReso->Fill(xReco - xTrue);
+        xResoRaw->Fill(xReco - xTrue);
+        yResoRaw->Fill(yReco - yTrue);
+        xResoCor->Fill(xRecoCor - xTrue);
+        yResoCor->Fill(yRecoCor - yTrue);
     }
 
     // Fit histograms
@@ -83,7 +102,18 @@ void ana(TString file_path)
     c1->Update();
 
     TCanvas* c2 = new TCanvas("c2", "", 0, 0, 1000, 800);
-    xReso->Draw();
-    // xReso->GetFunction("fit_xReso")->Draw("same");
+    xResoRaw->Draw();
     c2->Update();
+
+    TCanvas* c3 = new TCanvas("c3", "", 0, 0, 1000, 800);
+    yResoRaw->Draw();
+    c3->Update();
+
+    TCanvas* c4 = new TCanvas("c4", "", 0, 0, 1000, 800);
+    xResoCor->Draw();
+    c4->Update();
+
+    TCanvas* c5 = new TCanvas("c5", "", 0, 0, 1000, 800);
+    yResoCor->Draw();
+    c5->Update();
 }
