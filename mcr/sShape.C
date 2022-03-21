@@ -41,36 +41,70 @@ void sShape(TString file_path)
     inTree->SetBranchAddress("histXY",      &histXY);
 
     // S-Shape graph
-    TGraph* sShape = new TGraph();
+    TGraph* sShapeX = new TGraph();
+    sShapeX->GetXaxis()->SetTitle("xReco");
+    sShapeX->GetYaxis()->SetTitle("xReco - xTrue");
+    sShapeX->GetYaxis()->SetTitleOffset(1.3);
+
+    TGraph* sShapeY = new TGraph();
+    sShapeY->GetXaxis()->SetTitle("yReco");
+    sShapeY->GetYaxis()->SetTitle("yReco - yTrue");
+    sShapeY->GetYaxis()->SetTitleOffset(1.3);
 
     // Fit functions
-    TF1* sin_fit  = new TF1("sin_fit", "[0]*sin([1]*x + [2])", -0.1, 0);
-    sin_fit->SetParLimits(0, 0, 0.001);
-    sin_fit->SetLineColor(kRed);
-    TF1* pol3_fit = new TF1("pol3_fit", "pol3(0)", -0.1, 0);
-    pol3_fit->SetLineColor(kBlue);
+    TF1* sin_fit_x  = new TF1("sin_fit_x", "[0]*sin([1]*x + [2])", 0, 0.1);
+    sin_fit_x->SetParLimits(0, 0.0005, 0.001);
+    sin_fit_x->SetLineColor(kRed);
+
+    TF1* sin_fit_y  = new TF1("sin_fit_y", "[0]*sin([1]*x + [2])", 0, 0.1);
+    sin_fit_y->SetParLimits(0, 0.0005, 0.001);
+    sin_fit_y->SetLineColor(kRed);
+
+    TF1* pol3_fit_x = new TF1("pol3_fit_x", "pol3(0)", 0, 0.1);
+    pol3_fit_x->SetLineColor(kBlue);
+
+    TF1* pol3_fit_y = new TF1("pol3_fit_y", "pol3(0)", 0, 0.1);
+    pol3_fit_y->SetLineColor(kBlue);
 
     for (Int_t entryId = 0; entryId < inTree->GetEntries(); ++entryId) {
         inTree->GetEntry(entryId);
 
         // Fill graph
-        sShape->SetPoint(sShape->GetN(), xReco, xReco - xTrue);
+        sShapeX->SetPoint(sShapeX->GetN(), xReco, xReco - xTrue);
+        sShapeY->SetPoint(sShapeY->GetN(), yReco, yReco - yTrue);
     }
 
-    sShape->Fit(sin_fit,  "OE");
-    sShape->Fit(pol3_fit, "OE");
+    // X fits
+    sShapeX->Fit(sin_fit_x,  "OE");
+    sShapeX->Fit(pol3_fit_x, "OE");
+    // Y fits
+    sShapeY->Fit(sin_fit_y,  "OE");
+    sShapeY->Fit(pol3_fit_y, "OE");
 
     TCanvas* c1 = new TCanvas("c1", "", 0, 0, 1000, 800);
-    sShape->Draw("AP");
-    sin_fit->Draw("same");
-    pol3_fit->Draw("same");
+    sShapeX->Draw("AP");
+    sin_fit_x->Draw("same");
+    pol3_fit_x->Draw("same");
 
-    auto legend = new TLegend(0.1,0.7,0.48,0.9);
-    legend->AddEntry("sin_fit",  Form("sinus fit, chi2: %f",
-                                      sin_fit->GetChisquare()), "l");
-    legend->AddEntry("pol3_fit", Form("pol3 fit, chi2: %f",
-                                      pol3_fit->GetChisquare()), "l");
-    legend->Draw("same");
+    auto legendX = new TLegend(0.1,0.7,0.48,0.9);
+    legendX->AddEntry("sin_fit_x",  Form("sinus fit, chi2: %f",
+                                       sin_fit_x->GetChisquare()), "l");
+    legendX->AddEntry("pol3_fit_x", Form("pol3 fit, chi2: %f",
+                                       pol3_fit_x->GetChisquare()), "l");
+    legendX->Draw("same");
+
+    TCanvas* c2 = new TCanvas("c2", "", 0, 0, 1000, 800);
+    sShapeY->Draw("AP");
+    sin_fit_y->Draw("same");
+    pol3_fit_y->Draw("same");
+
+    auto legendY = new TLegend(0.1,0.7,0.48,0.9);
+    legendY->AddEntry("sin_fit_y",  Form("sinus fit, chi2: %f",
+                                       sin_fit_y->GetChisquare()), "l");
+    legendY->AddEntry("pol3_fit_y", Form("pol3 fit, chi2: %f",
+                                       pol3_fit_y->GetChisquare()), "l");
+    legendY->Draw("same");
 
     c1->Update();
+    c2->Update();
 }
