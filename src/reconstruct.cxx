@@ -19,9 +19,14 @@ using namespace std;
  * @param[in] event Event object.
  */
 
-float sShape(float x){
-    return CalConst::s0 + CalConst::s1*x + CalConst::s2*pow(x, 2)
-                                         + CalConst::s3*pow(x, 3);
+float sShapeX(float x){
+    return CalConst::s0X + CalConst::s1X*x + CalConst::s2X*pow(x, 2)
+                                           + CalConst::s3X*pow(x, 3);
+}
+
+float sShapeY(float y){
+    return CalConst::s0Y + CalConst::s1Y*y + CalConst::s2Y*pow(y, 2)
+                                           + CalConst::s3Y*pow(y, 3);
 }
 
 void reconstruct(Event& event,
@@ -76,27 +81,28 @@ void reconstruct(Event& event,
             graphX->Fit(fitFunc, "Q");
             xReco += fitFunc->GetParameter(1)*layerEnergy;
 
-            // cout << "xReco : " << xReco << " ; " << event.xTrue() << endl;
-            // cout << "layerEnergy : " << layerEnergy << endl;
-
             graphY->Fit(fitFunc, "Q");
             yReco += fitFunc->GetParameter(1)*layerEnergy;
-
-            // cout << "yReco : " << yReco << " ; " << event.yTrue() << endl;
         }
 
     }
     xReco /= event.eReco();
     yReco /= event.eReco();
 
-    xReco += sShape(int((xReco - CalConst::XYMin)/CalConst::XYSize)
-                                        *CalConst::XYSize/2. + CalConst::XYMin);
-    yReco += sShape(int((yReco - CalConst::XYMin)/CalConst::XYSize)
-                                        *CalConst::XYSize/2. + CalConst::XYMin);
+
+    // S-shape correction TODO
+    float xRecoCor = xReco - sShapeX(xReco - int(xReco/CalConst::XYSize)
+                                                 *CalConst::XYSize);
+    float yRecoCor = yReco - sShapeY(yReco - int(yReco/CalConst::XYSize)
+                                                 *CalConst::XYSize);
 
     event.setxReco(xReco);
     event.setyReco(yReco);
+    event.setxRecoCor(xRecoCor);
+    event.setyRecoCor(yRecoCor);
 
+    // Printout to check reconstruction
     // cout << "xReco : " << xReco;
-    // cout << "; xTrue : " << event.xTrue() << endl;
+    // cout << "; xTrue : " << event.xTrue();
+    // cout << "; xCorrrected : " << event.xRecoCor() << endl;
 }
