@@ -24,6 +24,12 @@ namespace ShowConst {
     static const float impactXMax = CalConst::XYMax;
     static const float impactYMin = CalConst::XYMin;
     static const float impactYMax = CalConst::XYMax;
+
+    // Parameters for S-shape analysis
+    // static const float impactXMin = 0.;
+    // static const float impactXMax = .1;
+    // static const float impactYMin = 0.;
+    // static const float impactYMax = .1;
 }
 
 #endif
