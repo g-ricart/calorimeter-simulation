@@ -20,6 +20,8 @@ private:
     float                   m_yTrue;          ///< true y coordinate of impact point
     float                   m_xReco;          ///< reconstructed x coordinate of impact point
     float                   m_yReco;          ///< reconstructed y coordinate of impact point
+    float                   m_xRecoCor;       ///< same as m_xReco but corrected with the S-shape
+    float                   m_yRecoCor;       ///< same as m_yReco but corrected with the S-shape
     CaloSimulation::CalData m_caldata;        ///< calorimeter data map.
     TH1F*                   m_histZ;          ///< layers energy histogram.
     TH2F*                   m_histXY;         ///< transverse energy histogram.
@@ -57,6 +59,10 @@ public:
     void setxReco(float xReco) { m_xReco = xReco; }
     //! Set the impact position reconstructed in y
     void setyReco(float yReco) { m_yReco = yReco; }
+    //! Set the impact position reconstructed and corrected for the S-shape in x
+    void setxRecoCor(float xRecoCor) { m_xRecoCor = xRecoCor; }
+    //! Set the impact position reconstructed and corrected for the S-shape in y
+    void setyRecoCor(float yRecoCor) { m_yRecoCor = yRecoCor; }
     //! Set the map (object of type : CaloData) with caracteristic of
     //! all cells
     /*!
@@ -87,6 +93,10 @@ public:
     float  xReco()                    const { return m_xReco; }
     //! Get the impact position reconstructed in y
     float  yReco()                    const { return m_yReco; }
+    //! Get the impact position reconstructed and corrected for the S-shape in x
+    float  xRecoCor()                 const { return m_xRecoCor; }
+    //! Get the impact position reconstructed and corrected for the S-shape in y
+    float  yRecoCor()                 const { return m_yRecoCor; }
     /*!
         Get the map (object of type : CaloData) with caracteristic of all cells
         \sa CaloSimulation::CalData

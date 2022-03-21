@@ -28,4 +28,6 @@ void Event::build(int eventNumber)
     m_yTrue       = -999.;
     m_xReco       = -999.;
     m_yReco       = -999.;
+    m_xRecoCor    = -999.;
+    m_yRecoCor    = -999.;
 }
