@@ -33,11 +33,16 @@ namespace CalConst {
     // Layer threshold energy to reconstruct impact point
     static const float layerEnrThr = 1e-6;
 
-    // Fit parameters of S-Shape (s0 + s1*x + s2*x**2 + s3*x**3)
-    static const float s0 = 1.76793e-06;
-    static const float s1 = -0.0564493;
-    static const float s2 = -1.6935;
-    static const float s3 = -11.2874;
+    // Fit parameters of S-Shape (s0 + s1*x + s2*x**2 + s3*x**3) in x and y
+    static const float s0X = -1.46517e-05;
+    static const float s1X = -0.0555484;
+    static const float s2X = 1.67576;
+    static const float s3X = -11.1799;
+
+    static const float s0Y = 1.22767e-06;
+    static const float s1Y = -0.0561498;
+    static const float s2Y = 1.68108;
+    static const float s3Y = -11.183;
 }
 
 #endif
