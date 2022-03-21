@@ -81,6 +81,8 @@ int main(int argc, char **argv)
     float yTrue;
     float xReco;
     float yReco;
+    float xRecoCor;
+    float yRecoCor;
     TH1F* histZ  = new TH1F();
     TH2F* histXY = new TH2F();
     outTree->Branch("eventNumber",    &eventNumber);
@@ -91,6 +93,8 @@ int main(int argc, char **argv)
     outTree->Branch("yTrue",          &yTrue);
     outTree->Branch("xReco",          &xReco);
     outTree->Branch("yReco",          &yReco);
+    outTree->Branch("xRecoCor",       &xRecoCor);
+    outTree->Branch("yRecoCor",       &yRecoCor);
     outTree->Branch("histZ",  "TH1F", &histZ);
     outTree->Branch("histXY", "TH2F", &histXY);
 
