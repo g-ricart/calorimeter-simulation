@@ -156,6 +156,8 @@ int main(int argc, char **argv)
         yTrue       = event.yTrue();
         xReco       = event.xReco();
         yReco       = event.yReco();
+        xRecoCor    = event.xRecoCor();
+        yRecoCor    = event.yRecoCor();
         histZ       = event.histZ();
         histXY      = event.histXY();
         outTree->Fill(); // Fill the tree.
