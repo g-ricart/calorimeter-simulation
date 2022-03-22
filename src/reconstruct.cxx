@@ -29,6 +29,14 @@ float sShapeY(float y){
                                            + CalConst::s3Y*pow(y, 3);
 }
 
+float sShapeXAlt(float x){
+    return CalConst::p0X * sin(CalConst::p1X*x + CalConst::p2X);
+}
+
+float sShapeYAlt(float y){
+    return CalConst::p0Y * sin(CalConst::p1Y*y + CalConst::p2Y);
+}
+
 void reconstruct(Event& event,
                  TF1*   fitFunc,
                  float* xCenterArray,
@@ -90,9 +98,9 @@ void reconstruct(Event& event,
     yReco /= event.eReco();
 
     // S-shape correction
-    float xRecoCor = xReco - sShapeX(xReco - int(xReco/CalConst::XYSize)
+    float xRecoCor = xReco - sShapeXAlt(xReco - int(xReco/CalConst::XYSize)
                                                  *CalConst::XYSize);
-    float yRecoCor = yReco - sShapeY(yReco - int(yReco/CalConst::XYSize)
+    float yRecoCor = yReco - sShapeYAlt(yReco - int(yReco/CalConst::XYSize)
                                                  *CalConst::XYSize);
 
     event.setxReco(xReco);

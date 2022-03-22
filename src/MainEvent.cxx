@@ -63,7 +63,7 @@ int main(int argc, char **argv)
     // Note that this file may contain any kind of ROOT objects, histograms,
     // pictures, graphics objects, detector geometries, tracks, events, etc..
     // This file is now becoming the current directory.
-    TFile* outFile = new TFile("Event.root", "RECREATE");
+    TFile* outFile = new TFile("EventAlt.root", "RECREATE");
 
     // Create a ROOT Tree and the branches to be written.
     // The instruction "Branch" tells ROOT that the value stored in this variable

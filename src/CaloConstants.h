@@ -43,6 +43,15 @@ namespace CalConst {
     static const float s1Y = -0.0561498;
     static const float s2Y = 1.68108;
     static const float s3Y = -11.183;
+
+    // Fit paramaeters of S-Shape (p0*sin(p1*x + p2))
+    static const float p0X = 0.000549641;
+    static const float p1X = 58.9337;
+    static const float p2X = -2.94605;
+
+    static const float p0Y = 0.000549483;
+    static const float p1Y = 59.1057;
+    static const float p2Y = -2.96516;
 }
 
 #endif

@@ -45,23 +45,31 @@ void ana(TString file_path)
                            "Energy resolution distribution",
                            100, -1, 1);
     eReso->GetXaxis()->SetTitle("eReco - eTrue [GeV]");
+    eReso->GetYaxis()->SetTitle("Nb of events");
 
     TH1F* xResoRaw = new TH1F("hist_xResoRaw",
                               "X raw resolution distribution",
                               100, -0.003, 0.003);
     xResoRaw->GetXaxis()->SetTitle("xReco - xTrue [m]");
+    xResoRaw->GetYaxis()->SetTitle("Nb of events");
 
     TH1F* yResoRaw = new TH1F("hist_yResoRaw",
                               "Y raw resolution distribution",
                               100, -0.003, 0.003);
+    yResoRaw->GetXaxis()->SetTitle("yReco - yTrue [m]");
+    yResoRaw->GetYaxis()->SetTitle("Nb of events");
 
     TH1F* xResoCor = new TH1F("hist_xResoCor",
                               "X corrected resolution distribution",
-                              1000, -1, 1);
+                              100, -0.003, 0.003);
+    xResoCor->GetXaxis()->SetTitle("xReco - xTrue [m]");
+    xResoCor->GetYaxis()->SetTitle("Nb of events");
 
     TH1F* yResoCor = new TH1F("hist_yResoCor",
                               "Y corrected resolution distribution",
                               100, -0.003, 0.003);
+    yResoCor->GetXaxis()->SetTitle("yReco - yTrue [m]");
+    yResoCor->GetYaxis()->SetTitle("Nb of events");
 
     // Fit functions
     TF1* fit_gaus = new TF1("fit_gaus", "gaus(0)",
@@ -87,7 +95,6 @@ void ana(TString file_path)
 
     // Fit histograms
     auto eResoFitResults = eReso->Fit((TF1*)fit_gaus->Clone("fit_eReso"), "OE");
-    // auto xResoFitResults = xReso->Fit((TF1*)fit_gaus->Clone("fit_xReso"), "E");
 
     // Outputs
     cout <<  inFile << endl; // check the pointer to the root file
@@ -97,8 +104,11 @@ void ana(TString file_path)
 
     // Draw histograms
     TCanvas* c1 = new TCanvas("c1", "", 0, 0, 1000, 800);
+    auto legendE = new TLegend(0.1,0.7,0.48,0.9);
+    legendE->AddEntry(eReso->GetFunction("fit_eReso"), "Gaussian fit", "l");
     eReso->Draw();
     eReso->GetFunction("fit_eReso")->Draw("same");
+    legendE->Draw("draw");
     c1->Update();
 
     TCanvas* c2 = new TCanvas("c2", "", 0, 0, 1000, 800);
@@ -116,4 +126,45 @@ void ana(TString file_path)
     TCanvas* c5 = new TCanvas("c5", "", 0, 0, 1000, 800);
     yResoCor->Draw();
     c5->Update();
+
+    inTree->GetEntry(5);
+
+    TCanvas* c6 = new TCanvas("c6", "", 0, 0, 1000, 800);
+    histZ->SetTitle("Deposited energy along Z axis");
+    histZ->GetXaxis()->SetTitle("Layer index");
+    histZ->GetYaxis()->SetTitle("Deposited energy [GeV]");
+    histZ->SetStats(0);
+    histZ->Draw();
+    c6->Update();
+
+    TCanvas* c7 = new TCanvas("c7", "", 0, 0, 1000, 800);
+    c7->SetLogz();
+
+    histXY->SetTitle("Deposited energy in transverse plane");
+    histXY->GetXaxis()->SetTitle("X cell index");
+    histXY->GetYaxis()->SetTitle("Y cell index");
+    histXY->GetZaxis()->SetTitle("Deposited energy [GeV]");
+    histXY->SetStats(0);
+
+    TMarker* impactPointReco = new TMarker((xRecoCor - CalConst::XYMin)/CalConst::XYSize,
+                                           (yRecoCor - CalConst::XYMin)/CalConst::XYSize,
+                                           43);
+    impactPointReco->SetMarkerSize(2);
+    impactPointReco->SetMarkerColor(kRed);
+
+    auto legend = new TLegend(0.1,0.7,0.48,0.9);
+    legend->AddEntry(impactPointReco, "Reconstructed impact point", "p");
+
+    histXY->Draw("colz");
+    impactPointReco->Draw("same");
+    c7->Update();
+    legend->Draw("same");
+
+    TCanvas* c8 = new TCanvas("c7", "", 0, 0, 1000, 800);
+    histXY->Draw("lego2 0");
+    histXY->GetXaxis()->SetTitleOffset(1.7);
+    histXY->GetYaxis()->SetTitleOffset(1.7);
+    histXY->GetZaxis()->SetTitleOffset(1.3);
+    c8->Update();
+
 }

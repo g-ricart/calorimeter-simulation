@@ -42,22 +42,22 @@ void sShape(TString file_path)
 
     // S-Shape graph
     TGraph* sShapeX = new TGraph();
-    sShapeX->GetXaxis()->SetTitle("xReco");
-    sShapeX->GetYaxis()->SetTitle("xReco - xTrue");
+    sShapeX->GetXaxis()->SetTitle("xReco [m]");
+    sShapeX->GetYaxis()->SetTitle("xReco - xTrue [m]");
     sShapeX->GetYaxis()->SetTitleOffset(1.3);
 
     TGraph* sShapeY = new TGraph();
-    sShapeY->GetXaxis()->SetTitle("yReco");
-    sShapeY->GetYaxis()->SetTitle("yReco - yTrue");
+    sShapeY->GetXaxis()->SetTitle("yReco [m]");
+    sShapeY->GetYaxis()->SetTitle("yReco - yTrue [m]");
     sShapeY->GetYaxis()->SetTitleOffset(1.3);
 
     // Fit functions
     TF1* sin_fit_x  = new TF1("sin_fit_x", "[0]*sin([1]*x + [2])", 0, 0.1);
-    sin_fit_x->SetParLimits(0, 0.0005, 0.001);
+    sin_fit_x->SetParLimits(0, 0.0001, 0.001);
     sin_fit_x->SetLineColor(kRed);
 
     TF1* sin_fit_y  = new TF1("sin_fit_y", "[0]*sin([1]*x + [2])", 0, 0.1);
-    sin_fit_y->SetParLimits(0, 0.0005, 0.001);
+    sin_fit_y->SetParLimits(0, 0.0001, 0.001);
     sin_fit_y->SetLineColor(kRed);
 
     TF1* pol3_fit_x = new TF1("pol3_fit_x", "pol3(0)", 0, 0.1);
